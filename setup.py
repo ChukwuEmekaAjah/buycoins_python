@@ -1,0 +1,2 @@
+from setuptools import setup
+setup(name='buycoins_python', version='0.1', description='Buycoins API Python client', url='http://github.com/storborg/funniest', author='Chukwuemeka Ajah', author_email='talk2ajah@gmail.com', license='MIT', packages=['buycoins_python'], install_requires=['graphene', 'requests'], zip_safe=False)
