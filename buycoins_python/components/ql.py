@@ -66,13 +66,9 @@ query = {
 #   }
 # }
 ql = {
-    "operation": "mutation",
-    "command": "   ",
-    "args": {"cryptocurrency":"bitcoin"},
-    "fields":[
-        {"field":"cryptocurrency"},
-        {"field":"address"}
-    ]
-}
+        "operation": "query",
+        "command": "getPrices",
+        "fields": [{"field":"id"}, {"field":"cryptocurrency"}, {"field":"sellPricePerCoin"}, {"field":"minSell"}, {"field":"maxSell"}, {"field":"expiresAt"}]
+    }
 
 print(create_request_body(ql))
