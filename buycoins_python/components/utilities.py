@@ -1,5 +1,8 @@
 import requests
-auth = None
+
+AUTH = None
+API_URL = "https://backend.buycoins.tech/api/graphql"
+HEADERS = {'Content-type':'application/json', 'Accepts':'application/json'}
 
 def make_request(url, method='post', headers={'Content-type':'application/json', 'Accepts':'application/json'}, params={}, data={}):
     response = requests.request(method, url, headers=headers, auth=auth, data=data, params=params)
@@ -7,10 +10,10 @@ def make_request(url, method='post', headers={'Content-type':'application/json',
 
 
 def _get_messages(errors):
-    return list(map(lambda error: error.message, errors))
+    return list(map(lambda error: error.get("message", ""), errors))
 
 def _get_fields(errors):
-    return list(map(lambda error: (error.path and error.path.join) or "", errors))
+    return list(map(lambda error: (error.get("path", []) and ".".join(error.get("path",[]))) or "", errors))
 
 def _create_error_response(errors):
     messages = _get_messages(errors)
@@ -22,14 +25,15 @@ def _create_error_response(errors):
 
 def parse_response(response):
     jsonResponse = response.json()
-    if(jsonResponse.errors):
+    
+    if(jsonResponse.get("errors")):
         return {
             "status": "failure",
-            "errors": _create_error_response(jsonResponse.errors),
-            "raw": jsonResponse.errors
+            "errors": _create_error_response(jsonResponse.get("errors", [])),
+            "raw": jsonResponse.get('errors', [])
         }
     else:
         return {
             "status": "success",
-            "data": response.data
+            "data":jsonResponse.get("data",{})
         }
