@@ -23,7 +23,7 @@ def create(account_name:str):
     if(not utilities.AUTH):
         raise Exception("Please set up your public and secret keys using buycoins_python.Auth.setup function.")
 
-    response = requests.post(utilities.API_URL, headers=utilities.HEADERS, auth=utilities.AUTH, data=data, params={})
+    response = requests.post(utilities.API_URL, headers=utilities.HEADERS, auth=utilities.AUTH, data={"query":data}, params={})
     
     return utilities.parse_response(response)
 
@@ -47,6 +47,6 @@ def createAddress(crypto_currency:str):
     if(not utilities.AUTH):
         raise Exception("Please set up your public and secret keys using buycoins_python.Auth.setup function.")
 
-    response = requests.post(utilities.API_URL, headers=utilities.HEADERS, auth=utilities.AUTH, data=data, params={})
+    response = requests.post(utilities.API_URL, headers=utilities.HEADERS, auth=utilities.AUTH, data={"query":data}, params={})
     
     return utilities.parse_response(response)

@@ -1,7 +1,7 @@
 
 AUTH = None
 API_URL = "https://backend.buycoins.tech/api/graphql"
-HEADERS = {'Content-type':'application/json', 'Accepts':'application/json'}
+HEADERS = { 'Accept':'application/json'}
 
 
 def create_request_body(fields):
