@@ -1,12 +1,7 @@
-import requests
 
 AUTH = None
 API_URL = "https://backend.buycoins.tech/api/graphql"
 HEADERS = {'Content-type':'application/json', 'Accepts':'application/json'}
-
-def make_request(url, method='post', headers={'Content-type':'application/json', 'Accepts':'application/json'}, params={}, data={}):
-    response = requests.request(method, url, headers=headers, auth=auth, data=data, params=params)
-    return response
 
 
 def _get_messages(errors):

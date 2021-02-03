@@ -49,6 +49,45 @@ class TestAccountMethods(unittest.TestCase):
         response = Accounts.create("Emeka")
         
         self.assertEqual(response['status'], "success")
+
+    
+    def test_address_creation(self):
+        """
+            Should raise an exception for invalid crypto_currency parameter type
+        """
+        Auth.setup("chuks", "emeka")
+
+        try:
+            Accounts.createAddress("  ")
+        except Exception as e:
+            self.assertEqual(str(e), "crypto_currency parameter is compulsory and it is a string.")
+
+    @patch('buycoins_python.Accounts.requests.post')  # Mock 'requests' module 'post' method.
+    def test_failed_address_creation(self, mock_post):
+        """
+            Should return a failure status for failed address creation
+        """
+
+        mock_post.return_value = MockResponse({"errors": [{"message": "Argument 'cryptocurrency' on Field 'createAddress' has an invalid value (bitcin). Expected type 'Cryptocurrency'.","locations": [{"line": 3,"column": 3}],"path": ["mutation","createAddress","cryptocurrency"],"extensions": {"code": "argumentLiteralsIncompatible","typeName": "Field","argumentName": "cryptocurrency"}}]}, 200)
+        
+        Auth.setup("chuks", "emeka")
+        response = Accounts.createAddress("xrpa")
+        
+        self.assertEqual(response['status'], "failure")
+        self.assertEqual(response["errors"][0]["reason"], "Argument 'cryptocurrency' on Field 'createAddress' has an invalid value (bitcin). Expected type 'Cryptocurrency'.")
+
+    @patch('buycoins_python.Accounts.requests.post')  # Mock 'requests' module 'post' method.
+    def test_successful_address_creation(self, mock_post):
+        """
+            Should return a crypto address
+        """
+        mock_post.return_value = MockResponse({"data": {"createAddress": {"cryptocurrency": "bitcoin","address": "31xzugY1gUi8UuzWXShswDuXZTnhxnJxbx"}}}, 200)
+        
+        Auth.setup("chuks", "emeka")
+        response = Accounts.createAddress("bitcoin")
+        
+        self.assertEqual(response['status'], "success")
+        self.assertEqual(response["data"]["createAddress"]["cryptocurrency"], "bitcoin")
         
 
 
