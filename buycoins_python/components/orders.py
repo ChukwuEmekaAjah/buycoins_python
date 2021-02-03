@@ -9,6 +9,14 @@ def list_my_orders(status:str = "open", fields:list = []):
 
         If fields parameter is empty, it defaults to retrieving all the fields
     """
+
+    if(not status or type(status) is not str or not status.strip()):
+        raise Exception("status parameter is compulsory and it is a string. Default is 'open'")
+
+    status_types = ["open", "completed"]
+    if status not in status_types:
+        raise Exception("Personal orders status can only be 'open' or 'completed'.")
+
     # add validation for fields
 
     if(not utilities.is_valid_fields(fields)):

@@ -13,7 +13,7 @@ class MockResponse:
 
 class TestPricesMethods(unittest.TestCase):
 
-    def test_invalid_secret_key_setup(self):
+    def test_invalid_field(self):
         """
             Should throw an exception for a node dict without a field property
         """
@@ -36,10 +36,10 @@ class TestPricesMethods(unittest.TestCase):
         self.assertEqual(response['status'], "failure")
         self.assertEqual(response["errors"][0]["reason"], "Field 'cryptocrrency' doesn't exist on type 'BuycoinsPrice'")
 
-    @patch('buycoins_python.Accounts.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_python.Prices.requests.post')  # Mock 'requests' module 'post' method.
     def test_successful_prices_retrieval(self, mock_post):
         """
-            Should return a success status for successful account creation
+            Should return a success status for successful prices retrieval
         """
         mock_post.return_value = MockResponse({"data":{"getPrices":[{"id":"QnV5Y29pbnNQcmljZS1mM2ZhOWI2Yy00MmM4LTQxMzAtOThmZC0zZGMwYjRjMmRlNjQ=","cryptocurrency":"bitcoin","sellPricePerCoin":"17827839.315","minSell":"0.001","maxSell":"0.35190587","expiresAt":1612391202}]}}, 200)
         
