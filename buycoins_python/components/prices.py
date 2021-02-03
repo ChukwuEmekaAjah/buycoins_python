@@ -11,6 +11,9 @@ def list(fields:list = []):
     """
     # add validation for fields
 
+    if(not utilities.is_valid_fields(fields)):
+        raise Exception("Fields contains a node dict without a 'field' property.")
+
     query_dict = {
         "operation": "query",
         "command": "getPrices",

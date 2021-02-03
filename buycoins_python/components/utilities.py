@@ -4,6 +4,13 @@ API_URL = "https://backend.buycoins.tech/api/graphql"
 HEADERS = { 'Accept':'application/json'}
 
 
+def is_valid_fields(fields):
+    for field in fields:
+        if not field.get("field"):
+            return False
+    
+    return True
+
 def create_request_body(fields):
     operations = ["query", "mutation"]
 

@@ -12,6 +12,15 @@ class MockResponse:
         return self.json_data
 
 class TestPricesMethods(unittest.TestCase):
+
+    def test_invalid_secret_key_setup(self):
+        """
+            Should throw an exception for a node dict without a field property
+        """
+        try:
+            Prices.list([{"field":"cryptocrrency"}, {"name":"chuks"}])
+        except Exception as e:
+            self.assertEqual(str(e), "Fields contains a node dict without a 'field' property.")
     
     @patch('buycoins_python.Prices.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_prices_retrieval(self, mock_post):
