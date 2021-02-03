@@ -55,7 +55,7 @@ class TestOrdersMethods(unittest.TestCase):
         self.assertEqual(response["errors"][0]["reason"], "Field 'edgesa' doesn't exist on type 'PostOrderConnection'")
 
     @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
-    def test_successful_prices_retrieval(self, mock_post):
+    def test_successful_list_my_orders(self, mock_post):
         """
             Should return a success status for successful personal orders retrieval
         """
@@ -66,6 +66,33 @@ class TestOrdersMethods(unittest.TestCase):
         
         self.assertEqual(response['status'], "success")
         self.assertEqual(response["data"]["getOrders"]["dynamicPriceExpiry"], 1612396362)
+
+    @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    def test_failed_list_market_orders(self, mock_post):
+        """
+            Should return a failure status when invalid node is requested.
+        """
+
+        mock_post.return_value = MockResponse({"errors":[{"message":"Field 'edgesa' doesn't exist on type 'PostOrderConnection'","locations":[{"line":1,"column":59}],"path":["query","getMarketBook","orders","edgesa"],"extensions":{"code":"undefinedField","typeName":"PostOrderConnection","fieldName":"edgesa"}}]}, 200)
+        
+        Auth.setup("chuks", "emeka")
+        response = Orders.list_market_orders([])
+        
+        self.assertEqual(response['status'], "failure")
+        self.assertEqual(response["errors"][0]["reason"], "Field 'edgesa' doesn't exist on type 'PostOrderConnection'")
+
+    @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    def test_successful_list_market_orders(self, mock_post):
+        """
+            Should return a success status for successful personal orders retrieval
+        """
+        mock_post.return_value = MockResponse({"data":{"getMarketBook":{"dynamicPriceExpiry":1612396362,"orders":{"edges":[]}}}}, 200)
+        
+        Auth.setup("chuks", "emeka")
+        response = Orders.list_market_orders(fields=[])
+        
+        self.assertEqual(response['status'], "success")
+        self.assertEqual(response["data"]["getMarketBook"]["dynamicPriceExpiry"], 1612396362)
 
 if __name__ == '__main__':
     unittest.main()
