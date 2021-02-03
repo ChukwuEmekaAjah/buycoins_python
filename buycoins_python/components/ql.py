@@ -67,8 +67,9 @@ query = {
 # }
 ql = {
         "operation": "query",
-        "command": "getPrices",
-        "fields": [{"field":"id"}, {"field":"cryptocurrency"}, {"field":"sellPricePerCoin"}, {"field":"minSell"}, {"field":"maxSell"}, {"field":"expiresAt"}]
+        "command": "getOrders",
+        "args": {"status":"open"},
+        "fields": [{"field":"dynamicPriceExpiry"}, {"field":"orders", "fields":[{"field":"edges", "fields": [{"field":"node", "fields":[{"field":"id"}, {"field":"cryptocurrency"}, {"field":"coinAmount"}, {"field":"side"}, {"field":"status"}, {"field":"createdAt"}, {"field":"pricePerCoin"}, {"field":"priceType"}, {"field":"staticPrice"}, {"field":"dynamicExchangeRate"}]}]}]}]
     }
 
 print(create_request_body(ql))
