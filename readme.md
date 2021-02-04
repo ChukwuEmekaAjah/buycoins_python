@@ -72,10 +72,8 @@ production use, but `debug` is also available for more verbosity.
 
 There are a few options for enabling it:
 Set `Logging`:
-
-    ```python
+```python
     import buycoins_python as buycoins
     buycoins.log = 'debug'
-    ```
-
-[public&secret-keys]: support@buycoins.africa
+    
+```
