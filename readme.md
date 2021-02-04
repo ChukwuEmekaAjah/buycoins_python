@@ -86,6 +86,6 @@ Set `Logging`:
 ```
 
 ### Todo
-- Cater for API calls returning results not in the 200 HTTP status range
+
 - Write tests for orders posting
 - Submit package to Pypi registry

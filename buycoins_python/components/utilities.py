@@ -180,6 +180,19 @@ def parse_response(response):
             }
     """
     jsonResponse = response.json()
+    if(response.status_code == 401):
+        return {
+            "status": "failure",
+            "errors": [{"reason": "Invalid credentials", "field":None}],
+            "raw": []
+        }
+
+    if(response.status_code > 299): # any other type of failed request status code away from standard 200 range.
+        return {
+            "status": "failure",
+            "errors": [{"reason": "Unknown failure", "field":None}],
+            "raw": []
+        }
     
     if(jsonResponse.get("errors")):
         return {
