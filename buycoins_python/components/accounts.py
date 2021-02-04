@@ -51,3 +51,4 @@ def createAddress(crypto_currency:str):
     response = requests.post(utilities.API_URL, headers=utilities.HEADERS, auth=HTTPBasicAuth(utilities.AUTH['username'], utilities.AUTH['password']), data={"query":data}, params={})
     
     return utilities.parse_response(response)
+
