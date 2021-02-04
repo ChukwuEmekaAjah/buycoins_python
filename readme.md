@@ -37,14 +37,14 @@ available in your [Buycoins App settings][api-keys] after you make a request to 
 value:
 
 ```python
-import buycoins_africa
-buycoins_africa.Auth.setup("public_key_...", "secret_key_...")
+import buycoins_python as buycoins
+buycoins.Auth.setup("public_key_...", "secret_key_...")
 
 # list personal orders
-my_orders = buycoins_africa.Orders.list_my_orders(status="open", fields=[])
+my_orders = buycoins.Orders.list_my_orders(status="open", fields=[])
 
 # list market book orders
-my_orders = buycoins_africa.Orders.list_market_orders(status="open", fields=[])
+my_orders = buycoins.Orders.list_market_orders(status="open", fields=[])
 
 ```
 
@@ -57,7 +57,7 @@ Invalid parameter types or absent parameters without a default raise an Exceptio
 Configure individual requests with keyword arguments. 
 
 ```python
-import stripe
+import buycoins_python as buycoins
 
 # buy cryptocurrency
 response = buycoins.Orders.buy(args={"price":"QnV5Y29pbnNQcmljZS0zOGIwYTg1Yi1jNjA1LTRhZjAtOWQ1My01ODk1MGVkMjUyYmQ=", "coin_amount":0.02, "cryptocurrency":"bitcoin"})
@@ -74,8 +74,8 @@ There are a few options for enabling it:
 Set `Logging`:
 
     ```python
-    import buycoins_africa
-    buycoins_africa.log = 'debug'
+    import buycoins_python as buycoins
+    buycoins.log = 'debug'
     ```
 
 [public&secret-keys]: support@buycoins.africa
