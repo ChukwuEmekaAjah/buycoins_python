@@ -27,7 +27,7 @@ class TestAuthMethods(unittest.TestCase):
         """
         auth = Auth.setup("buycoins", "africa")
 
-        self.assertEqual(auth, {"username":"buycoins", "password":"africa"})
+        self.assertEqual(auth, True)
 
 
 

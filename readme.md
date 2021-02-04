@@ -44,7 +44,7 @@ buycoins.Auth.setup("public_key_...", "secret_key_...")
 my_orders = buycoins.Orders.list_my_orders(status="open", fields=[])
 
 # list market book orders
-my_orders = buycoins.Orders.list_market_orders(status="open", fields=[])
+my_orders = buycoins.Orders.list_market_orders()
 
 ```
 ### Testing
@@ -84,3 +84,8 @@ Set `Logging`:
     buycoins.log = 'debug'
     
 ```
+
+### Todo
+- Cater for API calls returning results not in the 200 HTTP status range
+- Write tests for orders posting
+- Submit package to Pypi registry
