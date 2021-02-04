@@ -17,7 +17,7 @@ def fees(args:dict, fields:list=[]):
                 The amount cryptocurrency you intend to send
         
         fields (list):
-            The fields you want returned by the graphql query. It defaults to all the query fields if this argument is absent or empty. It is a list of dictionaries. 
+            The fields you want returned by the graphql query. It defaults to all the query fields of the getEstimatedNetworkFee query if this argument is absent or empty. It is a list of dictionaries. 
             An example field dict is represented as:
 
             {"field": "estimatedFee"}
@@ -38,7 +38,7 @@ def fees(args:dict, fields:list=[]):
         }
 
     Raises:
-        Exception: Only raised if any of the args parameter fields are invalid e.g amount not being a float or fields having an item dict without the dict property.
+        Exception: Only raised if any of the args parameter fields are invalid e.g amount not being a float or fields having an item dict without the field property.
     """
 
     if not args.get("cryptocurrency") or type(args.get("cryptocurrency")) is not str or not args.get("cryptocurrency").strip():
@@ -109,7 +109,7 @@ def send(args:dict, fields:list=[]):
         }
 
     Raises:
-        Exception: Only raised if any of the args parameter fields are invalid e.g amount not being a float or fields having an item dict without the dict property.
+        Exception: Only raised if any of the args parameter fields are invalid e.g amount not being a float or fields having an item dict without the field property.
     """
 
     if not args.get("address") or type(args.get("address")) is not str or not args.get("address").strip():
@@ -185,7 +185,7 @@ def buy(args:dict, fields:list=[]):
         }
 
     Raises:
-        Exception: Only raised if any of the args parameter fields are invalid e.g coin_amount not being a float or fields having an item dict without the dict property.
+        Exception: Only raised if any of the args parameter fields are invalid e.g coin_amount not being a float or fields having an item dict without the field property.
     """
     # add validation for fields
     if(not utilities.is_valid_fields(fields)):
@@ -255,7 +255,7 @@ def sell(args:dict, fields:list=[]):
         }
 
     Raises:
-        Exception: Only raised if any of the args parameter fields are invalid e.g coin_amount not being a float or fields having an item dict without the dict property.
+        Exception: Only raised if any of the args parameter fields are invalid e.g coin_amount not being a float or fields having an item dict without the field property.
     """
     # add validation for fields
     if(not utilities.is_valid_fields(fields)):

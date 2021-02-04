@@ -4,10 +4,35 @@ from . import utilities
 
 
 def list_my_orders(status:str="open", fields:list=[]):
-    """
-        Retrieve a list of orders made by you on the platform. 
+    """Retrieve a list of orders made by you on the platform. 
 
-        If fields parameter is empty, it defaults to retrieving all the fields
+    Returns all the orders made by you on the Buycoins platform
+
+    Args:
+        status (str):
+            The status of the order. It is either "completed" or "open"
+        fields (list):
+            The fields you want returned by the graphql query. It defaults to all the query fields associated with the getOrders query if this argument is absent or empty. It is a list of dictionaries. 
+            An example field dict is represented as:
+
+            {"field": "estimatedFee"}
+
+            Default fields are:
+            [{"field": "estimatedFee"}, {"field": "total"}]
+    
+    Returns:
+        A dict mapping containing a status key which can either be one of: "failure" or "success" and an errors/data key  depending on the status of the request. For example:
+
+        {"status":"success",
+         "data":{
+            "getOrders":{
+                "dynamicPriceExpiry":235245646
+            }
+         }
+        }
+
+    Raises:
+        Exception: Only raised if the status is invalid or fields having an item dict without the field property.
     """
 
     if(not status or type(status) is not str or not status.strip()):
@@ -40,10 +65,33 @@ def list_my_orders(status:str="open", fields:list=[]):
     return utilities.parse_response(response)
 
 def list_market_orders(fields:list=[]):
-    """
-        Retrieve a list of orders made on the marketplace platform.
+    """Retrieve a list of orders made on the marketplace platform.
+    
+    Returns all the orders that are available on the Buycoins marketplace
 
-        If fields parameter is empty, it defaults to retrieving all the fields
+    Args:
+        fields (list):
+            The fields you want returned by the graphql query. It defaults to all the query fields associated with the getMarketBook query if this argument is absent or empty. It is a list of dictionaries. 
+            An example field dict is represented as:
+
+            {"field": "estimatedFee"}
+
+            Default fields are:
+            [{"field": "estimatedFee"}, {"field": "total"}]
+    
+    Returns:
+        A dict mapping containing a status key which can either be one of: "failure" or "success" and an errors/data key  depending on the status of the request. For example:
+
+        {"status":"success",
+         "data":{
+            "getMarketBook":{
+                "dynamicPriceExpiry":235245646
+            }
+         }
+        }
+
+    Raises:
+        Exception: Only raised if fields having an item dict without the field property.
     """
     # add validation for fields
 
@@ -66,8 +114,50 @@ def list_market_orders(fields:list=[]):
     return utilities.parse_response(response)
 
 def post_list_order(args:dict, fields:list=[]):
-    """
-        Post a list order
+    """Post a list order
+
+    Returns the order data from making a postListOrder mutation call on the API. 
+
+    Args:
+        args (dict):
+            Arguments required by the graphql query to calculate the fees
+
+            args['orderSide'] (str):
+                The orderSide for the order you want to post. It is either "buy" or "sell"
+            args['priceType'] (str):
+                The priceType you want your order to use. It can be either "dynamic" or "static"
+            args['cryptocurrency'] (str):
+                The cryptocurrency for which you want to post
+            args['coinAmount'] (float):
+                The amount cryptocurrency you intend to post
+            args['staticPrice'] (str):
+                The static price you want to use for the order. It is an `optional` field.
+            args['dynamicExchangeRate'] (str):
+                The exchange rate between naira and dollar for the cryptocurrency value you want to use for the order. It is an `optional` field. 
+        
+        fields (list):
+            The fields you want returned by the graphql query. It defaults to all the mutation fields of the postListOrder mutation if this argument is absent or empty. It is a list of dictionaries. 
+            An example field dict is represented as:
+
+            {"field": "estimatedFee"}
+
+            Default fields are:
+            [{"field": "estimatedFee"}, {"field": "total"}]
+    
+    Returns:
+        A dict mapping containing a status key which can either be one of: "failure" or "success" and an errors/data key  depending on the status of the request. For example:
+
+        {"status":"success",
+         "data":{
+            "postListOrder":{
+                "id":"afWGFdfa823ladfadfja",
+                "status":"open"
+            }
+         }
+        }
+
+    Raises:
+        Exception: Only raised if any of the args parameter fields are invalid e.g coinAmount not being a float or fields having an item dict without the field property.
     """
     order_side_types = ["buy", "sell"]
     price_types = ["static", "dynamic"]
@@ -114,11 +204,46 @@ def post_list_order(args:dict, fields:list=[]):
 
 
 def post_market_order(args:dict, fields:list=[]):
-    """
-        Post a market order
+    """Post a market order
+
+    Returns the order data from making a postMarketOrder mutation call on the API. 
+
+    Args:
+        args (dict):
+            Arguments required by the graphql query to calculate the fees
+
+            args['orderSide'] (str):
+                The orderSide for the order you want to post. It is either "buy" or "sell"
+            args['cryptocurrency'] (str):
+                The cryptocurrency for which you want to post
+            args['coinAmount'] (float):
+                The amount cryptocurrency you intend to post
+            
+        fields (list):
+            The fields you want returned by the graphql query. It defaults to all the mutation fields of the postMarketOrder mutation if this argument is absent or empty. It is a list of dictionaries. 
+            An example field dict is represented as:
+
+            {"field": "estimatedFee"}
+
+            Default fields are:
+            [{"field": "estimatedFee"}, {"field": "total"}]
+    
+    Returns:
+        A dict mapping containing a status key which can either be one of: "failure" or "success" and an errors/data key  depending on the status of the request. For example:
+
+        {"status":"success",
+         "data":{
+            "postMarketOrder":{
+                "id":"afWGFdfa823ladfadfja",
+                "status":"open"
+            }
+         }
+        }
+
+    Raises:
+        Exception: Only raised if any of the args parameter fields are invalid e.g coinAmount not being a float or fields having an item dict without the field property.
     """
     order_side_types = ["buy", "sell"]
-    price_types = ["static", "dynamic"]
     
     # add validation for fields
     if(not utilities.is_valid_fields(fields)):
