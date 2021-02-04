@@ -47,6 +47,13 @@ my_orders = buycoins.Orders.list_my_orders(status="open", fields=[])
 my_orders = buycoins.Orders.list_market_orders(status="open", fields=[])
 
 ```
+### Testing
+
+All tests for the modules are in the tests folder. In order to run the tests, run the command below in a shell within the project folder.
+
+```bash
+    python -m unittest discover tests  
+```
 
 ### Handling exceptions
 
