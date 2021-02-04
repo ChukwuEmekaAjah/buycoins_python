@@ -65,30 +65,42 @@ def list_market_orders(fields:list=[]):
     
     return utilities.parse_response(response)
 
-def buy(args:dict, fields:list=[]):
+def post_list_order(args:dict, fields:list=[]):
     """
-        Buy a cryptocurrency
-        args key-value pairs are important.
-        If fields parameter is empty, it defaults to retrieving all the fields
+        Post a list order
     """
+    order_side_types = ["buy", "sell"]
+    price_types = ["static", "dynamic"]
+    
     # add validation for fields
     if(not utilities.is_valid_fields(fields)):
         raise Exception("Fields contains a node dict without a 'field' property.")
 
-    if not args.get("price") or type(args.get("price")) is not str or not args.get("price").strip():
-        raise Exception("price argument must be a valid string identifier.")
+    if not args.get("orderSide") or args.get("orderSide") not in order_side_types:
+        raise Exception("orderSide argument must be a valid string that is either 'buy' or 'sell'")
+
+    if not args.get("priceType") or args.get("priceType") not in price_types:
+        raise Exception("priceType argument must be a valid string that is either 'dynamic' or 'static'")
 
     if not args.get("cryptocurrency") or type(args.get("cryptocurrency")) is not str or not args.get("cryptocurrency").strip():
         raise Exception("cryptocurrency argument must be a valid string identifier.")
 
-    if not args.get("coin_amount") or type(args.get("coin_amount")) is not float or args.get("coin_amount") <= 0:
-        raise Exception("coin_amount argument must be a valid float and greater than 0.")
+    if not args.get("coinAmount") or type(args.get("coinAmount")) is not float or args.get("coinAmount") <= 0:
+        raise Exception("coinAmount argument must be a valid float and greater than 0.")
+
+    if args.get("staticPrice"):
+        if type(args.get("staticPrice")) is not float or args.get("staticPrice") <= 0:
+            raise Exception("staticPrice argument must be a valid float and greater than 0.")
+
+    if args.get("dynamicExchangeRate"):
+        if type(args.get("dynamicExchangeRate")) is not float or args.get("dynamicExchangeRate") <= 0:
+            raise Exception("dynamicExchangeRate argument must be a valid float and greater than 0.")
     
     query_dict = {
         "operation": "mutation",
-        "command": "buy",
+        "command": "postListOrder",
         "args": args,
-        "fields": fields if len(fields) > 0 else [{"field":"id"}, {"field":"cryptocurrency"}, {"field":"status"}, {"field":"totalCoinAmount"}, {"field":"side"}]
+        "fields": fields if len(fields) > 0 else [{"field":"id"}, {"field":"cryptocurrency"}, {"field":"status"}, {"field":"coinAmount"}, {"field":"side"}, {"field":"createdAt"}, {"field":"pricePerCoin"}, {"field":"priceType"}, {"field":"staticPrice"}, {"field":"dynamicExchangeRate"}]
     }
 
     data = utilities.create_request_body(query_dict)
@@ -100,30 +112,32 @@ def buy(args:dict, fields:list=[]):
     
     return utilities.parse_response(response)
 
-def sell(args:dict, fields:list=[]):
+
+def post_market_order(args:dict, fields:list=[]):
     """
-        Buy a cryptocurrency
-        args key-value pairs are important.
-        If fields parameter is empty, it defaults to retrieving all the fields
+        Post a market order
     """
+    order_side_types = ["buy", "sell"]
+    price_types = ["static", "dynamic"]
+    
     # add validation for fields
     if(not utilities.is_valid_fields(fields)):
         raise Exception("Fields contains a node dict without a 'field' property.")
 
-    if not args.get("price") or type(args.get("price")) is not str or not args.get("price").strip():
-        raise Exception("price argument must be a valid string identifier.")
+    if not args.get("orderSide") or args.get("orderSide") not in order_side_types:
+        raise Exception("orderSide argument must be a valid string that is either 'buy' or 'sell'")
 
     if not args.get("cryptocurrency") or type(args.get("cryptocurrency")) is not str or not args.get("cryptocurrency").strip():
         raise Exception("cryptocurrency argument must be a valid string identifier.")
 
-    if not args.get("coin_amount") or type(args.get("coin_amount")) is not float or args.get("coin_amount") <= 0:
-        raise Exception("coin_amount argument must be a valid float and greater than 0.")
-    
+    if not args.get("coinAmount") or type(args.get("coinAmount")) is not float or args.get("coinAmount") <= 0:
+        raise Exception("coinAmount argument must be a valid float and greater than 0.")
+
     query_dict = {
         "operation": "mutation",
-        "command": "sell",
+        "command": "postMarketOrder",
         "args": args,
-        "fields": fields if len(fields) > 0 else [{"field":"id"}, {"field":"cryptocurrency"}, {"field":"status"}, {"field":"totalCoinAmount"}, {"field":"side"}]
+        "fields": fields if len(fields) > 0 else [{"field":"id"}, {"field":"cryptocurrency"}, {"field":"status"}, {"field":"coinAmount"}, {"field":"side"}, {"field":"createdAt"}, {"field":"pricePerCoin"}, {"field":"priceType"}, {"field":"staticPrice"}, {"field":"dynamicExchangeRate"}]
     }
 
     data = utilities.create_request_body(query_dict)
