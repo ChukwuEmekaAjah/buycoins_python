@@ -94,5 +94,106 @@ class TestOrdersMethods(unittest.TestCase):
         self.assertEqual(response['status'], "success")
         self.assertEqual(response["data"]["getMarketBook"]["dynamicPriceExpiry"], 1612396362)
 
+class TestOrdersBuySellMethods(unittest.TestCase):
+
+    def test_invalid_sell_args_price(self):
+        """
+            Should throw an exception for invalid price id
+        """
+        try:
+            Orders.sell({"price":"", "coin_amount":0.02, "cryptocurrency":"bitcoin"})
+        except Exception as e:
+            self.assertEqual(str(e), "price argument must be a valid string identifier.")
+
+    def test_invalid_sell_args(self):
+        """
+            Should throw an exception for invalid coin_amount
+        """
+        try:
+            Orders.sell({"price":"QnV5Y29pbnNQcmljZS0zOGIwYTg1Yi1jNjA1LTRhZjAtOWQ1My01ODk1MGVkMjUyYmQ=", "coin_amount":0.0, "cryptocurrency":"bitcoin"})
+        except Exception as e:
+            self.assertEqual(str(e), "coin_amount argument must be a valid float and greater than 0.")
+
+    def test_invalid_sell_args(self):
+        """
+            Should throw an exception for invalid cryptocurrency
+        """
+        try:
+            Orders.sell({"price":"QnV5Y29pbnNQcmljZS0zOGIwYTg1Yi1jNjA1LTRhZjAtOWQ1My01ODk1MGVkMjUyYmQ=", "coin_amount":0.0, "cryptocurrency":""})
+        except Exception as e:
+            self.assertEqual(str(e), "cryptocurrency argument must be a valid string identifier.")
+
+    # def test_invalid_status(self):
+    #     """
+    #         Should throw an exception for invalid status parameter
+    #     """
+    #     try:
+    #         Orders.list_my_orders("closed")
+    #     except Exception as e:
+    #         self.assertEqual(str(e), "Personal orders status can only be 'open' or 'completed'.")
+
+    # def test_invalid_field(self):
+    #     """
+    #         Should throw an exception for a node dict without a field property
+    #     """
+    #     try:
+    #         Orders.list_my_orders("completed", [{"field":"cryptocrrency"}, {"name":"chuks"}])
+    #     except Exception as e:
+    #         self.assertEqual(str(e), "Fields contains a node dict without a 'field' property.")
+    
+    # @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    # def test_failed_list_my_orders(self, mock_post):
+    #     """
+    #         Should return a failure status when invalid node is requested.
+    #     """
+
+    #     mock_post.return_value = MockResponse({"errors":[{"message":"Field 'edgesa' doesn't exist on type 'PostOrderConnection'","locations":[{"line":1,"column":59}],"path":["query","getOrders","orders","edgesa"],"extensions":{"code":"undefinedField","typeName":"PostOrderConnection","fieldName":"edgesa"}}]}, 200)
+        
+    #     Auth.setup("chuks", "emeka")
+    #     response = Orders.list_my_orders("completed", [])
+        
+    #     self.assertEqual(response['status'], "failure")
+    #     self.assertEqual(response["errors"][0]["reason"], "Field 'edgesa' doesn't exist on type 'PostOrderConnection'")
+
+    # @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    # def test_successful_list_my_orders(self, mock_post):
+    #     """
+    #         Should return a success status for successful personal orders retrieval
+    #     """
+    #     mock_post.return_value = MockResponse({"data":{"getOrders":{"dynamicPriceExpiry":1612396362,"orders":{"edges":[]}}}}, 200)
+        
+    #     Auth.setup("chuks", "emeka")
+    #     response = Orders.list_my_orders(status="open", fields=[])
+        
+    #     self.assertEqual(response['status'], "success")
+    #     self.assertEqual(response["data"]["getOrders"]["dynamicPriceExpiry"], 1612396362)
+
+    # @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    # def test_failed_list_market_orders(self, mock_post):
+    #     """
+    #         Should return a failure status when invalid node is requested.
+    #     """
+
+    #     mock_post.return_value = MockResponse({"errors":[{"message":"Field 'edgesa' doesn't exist on type 'PostOrderConnection'","locations":[{"line":1,"column":59}],"path":["query","getMarketBook","orders","edgesa"],"extensions":{"code":"undefinedField","typeName":"PostOrderConnection","fieldName":"edgesa"}}]}, 200)
+        
+    #     Auth.setup("chuks", "emeka")
+    #     response = Orders.list_market_orders([])
+        
+    #     self.assertEqual(response['status'], "failure")
+    #     self.assertEqual(response["errors"][0]["reason"], "Field 'edgesa' doesn't exist on type 'PostOrderConnection'")
+
+    # @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    # def test_successful_list_market_orders(self, mock_post):
+    #     """
+    #         Should return a success status for successful personal orders retrieval
+    #     """
+    #     mock_post.return_value = MockResponse({"data":{"getMarketBook":{"dynamicPriceExpiry":1612396362,"orders":{"edges":[]}}}}, 200)
+        
+    #     Auth.setup("chuks", "emeka")
+    #     response = Orders.list_market_orders(fields=[])
+        
+    #     self.assertEqual(response['status'], "success")
+    #     self.assertEqual(response["data"]["getMarketBook"]["dynamicPriceExpiry"], 1612396362)
+
 if __name__ == '__main__':
     unittest.main()
