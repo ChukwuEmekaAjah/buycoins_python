@@ -94,6 +94,23 @@ print(new_account)
 
 ```
 
+#### create_address
+Creates a cryptocurrency address to receive money in. You should send this address to your prospective sender.
+
+This function takes a single compulsory parameter which is the cryptocurrency name you want to create an address for. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `createAddress mutation` can return. The function raises an exception if a valid `crypto_currency` parameter is not provided or the `fields` property provided contains an invalid field dict.
+
+It returns the newly created cryptocurrency address `dict` or an error response `dict` if the request to the Buycoins API fails.
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+new_address = buycoins.Accounts.create_address("litecoin")
+
+print(new_address)
+
+```
 
 ### Balances
 
