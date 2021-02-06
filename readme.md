@@ -175,9 +175,97 @@ print(currency_prices)
 
 ```
 
-### Orders
 
 ### Transfers
+The `Transfers` module contains functions for retrieving cryptocurrency transfer fees, sending cryptocurrencies, placing orders for buying as well as selling cryptocurrencies. It implements GraphQL API calls to the Buycoins API as stated in the following links of the API documentation.
+- fees [getEstimatedNetworkFee documentation](https://developers.buycoins.africa/sending/network-fees)
+- send [Send cryptocurrency documentation](https://developers.buycoins.africa/sending/send)
+- buy [Buy documentation](https://developers.buycoins.africa/placing-orders/buy)
+- sell [Sell documentation](https://developers.buycoins.africa/placing-orders/sell)
+
+#### fees
+Retrieve fees for sending a cryptocurrency to an address
+
+This function takes a single compulsory parameter which is a dict containing the required arguments needed for retrieving the transfer fee when a `getEstimatedNetworkFee query` is called on the Buycoins API. These arguments are: `cryptocurrency` and `amount` as stated in the main API documentation.
+
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getEstimatedNetworkFee query` can return. The function raises an exception if an invalid `args` field value is provided or required field in the dict is absent or the `fields` property provided contains an invalid field dict.
+
+It returns the fees in the specified cryptocurrency required to make a transfer possible on the Buycoins platform. 
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+fees = buycoins.Transfers.fees({"cryptocurrency":"bitcoin", "amount":0.02})
+
+print(fees)
+
+```
+
+#### send
+Send cryptocurrency to a cryptocurrency address
+
+This function takes a single compulsory parameter which is a dict containing the required arguments needed for sending cryptocurrency to a specified address via the `send mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `address` and `amount` as stated in the main API documentation.
+
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `send mutation` can return. The function raises an exception if an invalid `args` field value is provided or required field in the `args` dict is absent or the `fields` property provided contains an invalid field dict.
+
+It returns the transaction details. 
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+transaction_info = buycoins.Transfers.send({"cryptocurrency":"bitcoin", "amount":0.02, "address":"vdADFaj7f89dfkadf="})
+
+print(transaction_info)
+
+```
+
+#### buy
+Buy cryptocurrency on the Buycoins platform.
+
+This function takes a single compulsory parameter which is a dict containing the required arguments needed for buying cryptocurrency via the `buy mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `price` and `coin_amount` as stated in the main API documentation.
+
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `buy mutation` can return. The function raises an exception if an invalid `args` field value is provided or required field in the `args` dict is absent or the `fields` property provided contains an invalid field dict.
+
+It returns the transaction details. 
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+transaction_info = buycoins.Transfers.buy({"cryptocurrency":"bitcoin", "coin_amount":0.02, "price":"vdADFaj7f89dfkadf="})
+
+print(transaction_info)
+
+```
+
+#### sell
+Sell a cryptocurrency on the Buycoins platform.
+
+This function takes a single compulsory parameter which is a dict containing the required arguments needed for selling cryptocurrency via the `sell mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `price` and `coin_amount` as stated in the main API documentation.
+
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `sell mutation` can return. The function raises an exception if an invalid `args` field value is provided or required field in the `args` dict is absent or the `fields` property provided contains an invalid field dict.
+
+It returns the transaction details. 
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+transaction_info = buycoins.Transfers.sell({"cryptocurrency":"bitcoin", "coin_amount":0.02, "price":"vdADFaj7f89dfkadf="})
+
+print(transaction_info)
+
+```
+
+### Orders
+
+
 
 ### Testing
 
@@ -194,6 +282,7 @@ Invalid parameter types or absent parameters without a default raise an Exceptio
 ### Per-request Configuration
 
 Configure individual requests with keyword arguments. 
+Also, make sure to have called the `Auth.setup` function at the beginning of your code file with your public and secret keys before making any calls to the API else the package would raise an exception.
 
 ```python
 import buycoins_python as buycoins
