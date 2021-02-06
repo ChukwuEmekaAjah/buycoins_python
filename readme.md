@@ -48,7 +48,7 @@ my_orders = buycoins.Orders.list_market_orders()
 
 ```
 
-### Modules
+## Modules
 The package contains 6 core modules with related functions to adequately represent the queries and mutations on the main API. You don't need to know GraphQL to be able to use the package; this is because a dict to graphql parser has been created in the package. All you just have to do is specify arguments (where need be) or fields you want retrieved (else all the associated query fields are returned).
 
 These modules are:
@@ -58,6 +58,22 @@ These modules are:
 - Orders - For placing orders on the marketplace, viewing the market book as well as your personal orders on the platform
 - Prices - For retrieving cryptocurrency prices on the platform
 - Transfers - For checking transfer fees, sending, buying and selling cryptocurrencies via the API. 
+
+## Modules API
+
+
+### Auth
+
+
+### Accounts
+
+### Balances
+
+### Orders
+
+### Prices
+
+### Transfers
 
 ### Testing
 
