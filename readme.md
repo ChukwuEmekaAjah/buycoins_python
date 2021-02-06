@@ -113,6 +113,44 @@ print(new_address)
 ```
 
 ### Balances
+The `Balances` module is used for retrieving your account balances in different cryptocurrencies on the Buycoins platform. It contains two functions. They are `get` for retrieving a single cryptocurrency balance and `list` for retrieving balances of all the cryptocurrencies you own. 
+The Buycoins documentation on retrieving balances can be found [here](https://developers.buycoins.africa/sending/account-balances)
+
+#### get
+Retrieve a single cryptocurrency balance on your wallets
+
+This function takes a single compulsory parameter which is the cryptocurrency name you want to get its balance. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getBalances query` can return. The function raises an exception if a valid `cryptocurrency` string parameter is not provided or the `fields` property provided contains an invalid field dict.
+
+It returns the wallet balance in the specified currency.
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+wallet_balance = buycoins.Balances.get("litecoin")
+
+print(wallet_balance)
+
+```
+
+#### list
+Retrieve a list of balances in all supported cryptocurrencies you own on your wallet.
+
+This function takes no compulsory parameter. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getBalances query` can return. The function raises an exception if the `fields` property provided contains an invalid field dict.
+
+It returns your wallet balances in all the cryptocurrencies that are supported on the Buycoins platform.
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+wallet_balances = buycoins.Balances.list()
+
+print(wallet_balances)
+
+```
 
 ### Orders
 
