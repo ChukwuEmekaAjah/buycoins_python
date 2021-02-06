@@ -54,7 +54,7 @@ def create(account_name:str, fields:list=[]):
     
     return utilities.parse_response(response)
 
-def createAddress(crypto_currency:str, fields:list=[]):
+def create_address(crypto_currency:str, fields:list=[]):
     """Create a cryptocurrency address to receive money in. You should send this address to your prospective sender
 
     Returns the newly created cryptocurrency address from making a call on the `createAddress` mutation call on the API.

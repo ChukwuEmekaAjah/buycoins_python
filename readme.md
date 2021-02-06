@@ -63,10 +63,9 @@ These modules are:
 
 ## Modules API
 
-
 ### Auth
 
-It requires that you utilize the public and secret keys as specified in the [Authentication documentation](ttps://developers.buycoins.africa/introduction/authentication)
+It requires that you utilize the public and secret keys as specified in the [Authentication documentation](https://developers.buycoins.africa/introduction/authentication)
 
 To set up authentication credentials just call the `setup` function of the `Auth` module with the public and secret keys respectively. It raises an exception if any of both parameters is not provided or aren't of type `str`. You can set it up as follows:
 ```python
@@ -76,6 +75,25 @@ buycoins.Auth.setup("public_key_...", "secret_key_...")
 ```
 
 ### Accounts
+The `Accounts` module is used for creating virtual bank accounts and for creating cryptocurrency addresses. It contains two functions, these functions are: `create` for creating a virtual account and `create_address` for creating a cryptocurrency address. For creating a virtual account, see the documentation from the  API here [Create a virtual account](https://developers.buycoins.africa/naira-token-account/create-virtual-deposit-account).
+For creating a cryptocurrency address, see the main documentation here: [Create cryptocurrency address](https://developers.buycoins.africa/receiving/create-address)
+
+#### create
+This function takes a single compulsory parameter which is the account name to use for the new virtual bank account. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `mutation` can return. The function raises an exception if a valid `account_name` parameter is not provided or the `fields` property provided contains an invalid field dict.
+
+It returns the newly created virtual bank account `dict` or an error response `dict` if the request to the Buycoins API fails.
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+new_account = buycoins.Accounts.create("Chukwuemeka Ajah")
+
+print(new_account)
+
+```
+
 
 ### Balances
 

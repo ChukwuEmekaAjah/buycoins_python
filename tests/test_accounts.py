@@ -58,7 +58,7 @@ class TestAccountMethods(unittest.TestCase):
         Auth.setup("chuks", "emeka")
 
         try:
-            Accounts.createAddress("  ")
+            Accounts.create_address("  ")
         except Exception as e:
             self.assertEqual(str(e), "crypto_currency parameter is compulsory and it is a string.")
 
@@ -71,7 +71,7 @@ class TestAccountMethods(unittest.TestCase):
         mock_post.return_value = MockResponse({"errors": [{"message": "Argument 'cryptocurrency' on Field 'createAddress' has an invalid value (bitcin). Expected type 'Cryptocurrency'.","locations": [{"line": 3,"column": 3}],"path": ["mutation","createAddress","cryptocurrency"],"extensions": {"code": "argumentLiteralsIncompatible","typeName": "Field","argumentName": "cryptocurrency"}}]}, 200)
         
         Auth.setup("chuks", "emeka")
-        response = Accounts.createAddress("xrpa")
+        response = Accounts.create_address("xrpa")
         
         self.assertEqual(response['status'], "failure")
         self.assertEqual(response["errors"][0]["reason"], "Argument 'cryptocurrency' on Field 'createAddress' has an invalid value (bitcin). Expected type 'Cryptocurrency'.")
@@ -84,7 +84,7 @@ class TestAccountMethods(unittest.TestCase):
         mock_post.return_value = MockResponse({"data": {"createAddress": {"cryptocurrency": "bitcoin","address": "31xzugY1gUi8UuzWXShswDuXZTnhxnJxbx"}}}, 200)
         
         Auth.setup("chuks", "emeka")
-        response = Accounts.createAddress("bitcoin")
+        response = Accounts.create_address("bitcoin")
         
         self.assertEqual(response['status'], "success")
         self.assertEqual(response["data"]["createAddress"]["cryptocurrency"], "bitcoin")
