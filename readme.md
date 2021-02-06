@@ -7,6 +7,8 @@ functions for API resources that initialize themselves dynamically from API
 responses which makes it compatible with a wide range of versions of the Buycoins
 API.
 
+<b>You don't need to know GraphQL to be able to use the package. </b> Your basic understanding of calling functions and assigning variables in Python is more than enough. 
+
 ## Documentation
 
 See the [Buycoins GraphQL API docs](https://developers.buycoins.africa/).
@@ -64,6 +66,14 @@ These modules are:
 
 ### Auth
 
+It requires that you utilize the public and secret keys as specified in the [Authentication documentation](ttps://developers.buycoins.africa/introduction/authentication)
+
+To set up authentication credentials just call the `setup` function of the `Auth` module with the public and secret keys respectively. It raises an exception if any of both parameters is not provided or aren't of type `str`. You can set it up as follows:
+```python
+import buycoins_python as buycoins
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+```
 
 ### Accounts
 
