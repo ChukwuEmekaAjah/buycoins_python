@@ -13,6 +13,55 @@ class MockResponse:
 
 class TestBuySellMethods(unittest.TestCase):
 
+    def test_invalid_fees_args_cryptocurrency(self):
+        """
+            Should throw an exception for invalid crytocurrency argument
+        """
+        try:
+            Transfers.fees({"cryptocurrency":""})
+        except Exception as e:
+            self.assertEqual(str(e), "cryptocurrency argument must be a valid string identifier.")
+
+
+    def test_invalid_fees_args_amount(self):
+        """
+            Should throw an exception for invalid crytocurrency argument
+        """
+        try:
+            Transfers.fees({"cryptocurrency":"bitcoin", "amount":-0.2})
+        except Exception as e:
+            self.assertEqual(str(e), "amount argument must be a valid float and greater than 0.")
+
+
+    @patch('buycoins_python.Transfers.requests.post')  # Mock 'requests' module 'post' method.
+    def test_failed_fees_request(self, mock_post):
+        """
+            Should return a failure status when fees retrieval fails
+        """
+
+        mock_post.return_value = MockResponse({"errors":[{"message":"Argument 'cryptocurrency' on Field 'getEstimatedNetworkFee' has an invalid value (ethereu). Expected type 'Cryptocurrency'.","locations":[{"line":3,"column":3}],"path":["query","getEstimatedNetworkFee","cryptocurrency"],"extensions":{"code":"argumentLiteralsIncompatible","typeName":"Field","argumentName":"cryptocurrency"}}]}, 200)
+        
+        Auth.setup("chuks", "emeka")
+        response = Transfers.fees({"amount":0.02, "cryptocurrency":"bitcoin"}, [])
+        
+        self.assertEqual(response['status'], "failure")
+        self.assertEqual(response["errors"][0]["reason"], "Argument 'cryptocurrency' on Field 'getEstimatedNetworkFee' has an invalid value (ethereu). Expected type 'Cryptocurrency'.")
+
+    @patch('buycoins_python.Transfers.requests.post')  # Mock 'requests' module 'post' method.
+    def test_successful_fees_request(self, mock_post):
+        """
+            Should return a success status when fees is successfully retrieved for a valid cryptocurrency
+        """
+
+        mock_post.return_value = MockResponse({"data":{"getEstimatedNetworkFee":{"estimatedFee":"0.0166","total":"0.0266"}}}, 200)
+        
+        Auth.setup("chuks", "emeka")
+        response = Transfers.fees({"amount":0.02, "cryptocurrency":"ethereum"}, [])
+        
+        self.assertEqual(response['status'], "success")
+        self.assertEqual(response["data"]["getEstimatedNetworkFee"]["total"], "0.0266")
+        self.assertEqual(response["data"]["getEstimatedNetworkFee"]["estimatedFee"], "0.0166")
+
     def test_invalid_sell_args_price(self):
         """
             Should throw an exception for invalid price id
