@@ -113,10 +113,10 @@ def list_market_orders(fields:list=[]):
     
     return utilities.parse_response(response)
 
-def post_list_order(args:dict, fields:list=[]):
-    """Post a list order
+def post_limit_order(args:dict, fields:list=[]):
+    """Post a limit order
 
-    Returns the order data from making a postListOrder mutation call on the API. 
+    Returns the order data from making a postLimitOrder mutation call on the API. 
 
     Args:
         args (dict):
@@ -149,7 +149,7 @@ def post_list_order(args:dict, fields:list=[]):
 
         {"status":"success",
          "data":{
-            "postListOrder":{
+            "postLimitOrder":{
                 "id":"afWGFdfa823ladfadfja",
                 "status":"open"
             }
@@ -188,7 +188,7 @@ def post_list_order(args:dict, fields:list=[]):
     
     query_dict = {
         "operation": "mutation",
-        "command": "postListOrder",
+        "command": "postLimitOrder",
         "args": args,
         "fields": fields if len(fields) > 0 else [{"field":"id"}, {"field":"cryptocurrency"}, {"field":"status"}, {"field":"coinAmount"}, {"field":"side"}, {"field":"createdAt"}, {"field":"pricePerCoin"}, {"field":"priceType"}, {"field":"staticPrice"}, {"field":"dynamicExchangeRate"}]
     }

@@ -79,7 +79,7 @@ The `Accounts` module is used for creating virtual bank accounts and for creatin
 For creating a cryptocurrency address, see the main documentation here: [Create cryptocurrency address](https://developers.buycoins.africa/receiving/create-address)
 
 #### create
-This function takes a single compulsory parameter which is the account name to use for the new virtual bank account. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `mutation` can return. The function raises an exception if a valid `account_name` parameter is not provided or the `fields` property provided contains an invalid field dict.
+This function takes a single compulsory parameter which is the account name to use for the new virtual bank account. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `mutation` can return. The function raises an exception if a valid `account_name` parameter is not provided or the `fields` parameter provided contains an invalid field dict.
 
 It returns the newly created virtual bank account `dict` or an error response `dict` if the request to the Buycoins API fails.
 
@@ -97,7 +97,7 @@ print(new_account)
 #### create_address
 Creates a cryptocurrency address to receive money in. You should send this address to your prospective sender.
 
-This function takes a single compulsory parameter which is the cryptocurrency name you want to create an address for. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `createAddress mutation` can return. The function raises an exception if a valid `crypto_currency` parameter is not provided or the `fields` property provided contains an invalid field dict.
+This function takes a single compulsory parameter which is the cryptocurrency name you want to create an address for. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `createAddress mutation` can return. The function raises an exception if a valid `crypto_currency` parameter is not provided or the `fields` parameter provided contains an invalid field dict.
 
 It returns the newly created cryptocurrency address `dict` or an error response `dict` if the request to the Buycoins API fails.
 
@@ -119,7 +119,7 @@ The Buycoins documentation on retrieving balances can be found [here](https://de
 #### get
 Retrieve a single cryptocurrency balance on your wallets
 
-This function takes a single compulsory parameter which is the cryptocurrency name you want to get its balance. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getBalances query` can return. The function raises an exception if a valid `cryptocurrency` string parameter is not provided or the `fields` property provided contains an invalid field dict.
+This function takes a single compulsory parameter which is the cryptocurrency name you want to get its balance. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getBalances query` can return. The function raises an exception if a valid `cryptocurrency` string parameter is not provided or the `fields` parameter provided contains an invalid field dict.
 
 It returns the wallet balance in the specified currency.
 
@@ -137,7 +137,7 @@ print(wallet_balance)
 #### list
 Retrieve a list of balances in all supported cryptocurrencies you own on your wallet.
 
-This function takes no compulsory parameter. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getBalances query` can return. The function raises an exception if the `fields` property provided contains an invalid field dict.
+This function takes no compulsory parameter. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getBalances query` can return. The function raises an exception if the `fields` parameter provided contains an invalid field dict.
 
 It returns your wallet balances in all the cryptocurrencies that are supported on the Buycoins platform.
 
@@ -160,7 +160,7 @@ The Buycoins documentation on retrieving the prices of cryptocurrencies can be f
 #### list
 Retrieve a list of cryptocurrency prices
 
-This function takes no compulsory parameter. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getPrices query` can return. The function raises an exception if the `fields` property provided contains an invalid field dict.
+This function takes no compulsory parameter. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getPrices query` can return. The function raises an exception if the `fields` parameter provided contains an invalid field dict.
 
 It returns the current prices of cryptocurrencies supported on the Buycoins platform.
 
@@ -188,7 +188,7 @@ Retrieve fees for sending a cryptocurrency to an address
 
 This function takes a single compulsory parameter which is a dict containing the required arguments needed for retrieving the transfer fee when a `getEstimatedNetworkFee query` is called on the Buycoins API. These arguments are: `cryptocurrency` and `amount` as stated in the main API documentation.
 
-Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getEstimatedNetworkFee query` can return. The function raises an exception if an invalid `args` field value is provided or required field in the dict is absent or the `fields` property provided contains an invalid field dict.
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getEstimatedNetworkFee query` can return. The function raises an exception if an invalid `args` field value is provided or required field in the dict is absent or the `fields` parameter provided contains an invalid field dict.
 
 It returns the fees in the specified cryptocurrency required to make a transfer possible on the Buycoins platform. 
 
@@ -208,7 +208,7 @@ Send cryptocurrency to a cryptocurrency address
 
 This function takes a single compulsory parameter which is a dict containing the required arguments needed for sending cryptocurrency to a specified address via the `send mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `address` and `amount` as stated in the main API documentation.
 
-Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `send mutation` can return. The function raises an exception if an invalid `args` field value is provided or required field in the `args` dict is absent or the `fields` property provided contains an invalid field dict.
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `send mutation` can return. The function raises an exception if an invalid `args` field value is provided or required field in the `args` dict is absent or the `fields` parameter provided contains an invalid field dict.
 
 It returns the transaction details. 
 
@@ -226,9 +226,9 @@ print(transaction_info)
 #### buy
 Buy cryptocurrency on the Buycoins platform.
 
-This function takes a single compulsory parameter which is a dict containing the required arguments needed for buying cryptocurrency via the `buy mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `price` and `coin_amount` as stated in the main API documentation.
+This function takes a single compulsory parameter which is a dict containing the required arguments needed for buying cryptocurrency via the `buy mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `price` and `coin_amount` as stated in the main API documentation. The `price` field is the `id` of the cryptocurrency price returned from calling `Prices.get` function for the cryptocurrency.
 
-Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `buy mutation` can return. The function raises an exception if an invalid `args` field value is provided or required field in the `args` dict is absent or the `fields` property provided contains an invalid field dict.
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `buy mutation` can return. The function raises an exception if an invalid `args` field value is provided or required field in the `args` dict is absent or the `fields` parameter provided contains an invalid field dict.
 
 It returns the transaction details. 
 
@@ -246,9 +246,9 @@ print(transaction_info)
 #### sell
 Sell a cryptocurrency on the Buycoins platform.
 
-This function takes a single compulsory parameter which is a dict containing the required arguments needed for selling cryptocurrency via the `sell mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `price` and `coin_amount` as stated in the main API documentation.
+This function takes a single compulsory parameter which is a dict containing the required arguments needed for selling cryptocurrency via the `sell mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `price` and `coin_amount` as stated in the main API documentation. The `price` field is the `id` of the cryptocurrency price returned from calling `Prices.get` function for the cryptocurrency.
 
-Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `sell mutation` can return. The function raises an exception if an invalid `args` field value is provided or required field in the `args` dict is absent or the `fields` property provided contains an invalid field dict.
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `sell mutation` can return. The function raises an exception if an invalid `args` field value is provided or required field in the `args` dict is absent or the `fields` parameter provided contains an invalid field dict.
 
 It returns the transaction details. 
 
@@ -264,7 +264,89 @@ print(transaction_info)
 ```
 
 ### Orders
+The `Orders` module contains functions for retrieving personal orders made on the platform, marketplace orders as well as posting personal and marketplace orders. It implements GraphQL API calls to the Buycoins API as stated in the following links of the API documentation.
 
+- list_my_orders [Get list orders documentation](https://developers.buycoins.africa/p2p/get-orders)
+- list_market_orders [Get market book documentation](https://developers.buycoins.africa/p2p/get-market-book)
+- post_limit_order [Post limit order documentation](https://developers.buycoins.africa/p2p/post-limit-order)
+- post_market_order [Post market order documentation](https://developers.buycoins.africa/p2p/post-market-order)
+
+
+#### list_my_orders
+Retrieve a list of orders made by you on the platform. 
+
+This function takes a single compulsory parameter which is a string indicating the status of the order required for retrieving limit orders using the `getOrders query` on the Buycoins API documentation. These argument is `status` and it defaults to `open`. It can be any of `open` or `completed`.
+
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getOrders query` can return. The function raises an exception if an invalid `status` value is provided or the `fields` parameter provided contains an invalid field dict.
+
+It returns all the limit orders made by you on the Buycoins platform.
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+orders = buycoins.Orders.list_my_orders(status="completed")
+
+print(orders)
+
+```
+
+#### list_market_orders
+Retrieve a list of orders made on the marketplace platform.
+
+This function <b>no</b> compulsory parameters. It's a call on the `getMarketBook query` on the Buycoins API documentation. 
+
+Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getMarketBook query` can return. The function raises an exception if `fields` parameter provided contains an invalid field dict.
+
+It returns all the limit orders made by you on the Buycoins platform.
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+orders = buycoins.Orders.list_market_orders()
+
+print(orders)
+
+```
+
+#### post_limit_order
+Post a limit order and have the transaction details returned
+
+This function takes a single compulsory parameter which is a dict containing the required arguments needed for posting an order via the `postLimitOrder mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `orderSide`, `priceType`, `staticPrice`, `dynamicExchangeRate`  and `coinAmount` as stated in the main API documentation. The `orderSide` can only be either of `buy` or `sell`. The `priceType` can only be either of `static` or `dynamic`. The `staticPrice` and `dynamicExchangeRate` arguments are <b>optional</b> as stated in the API. 
+
+The function raises an exception if a valid `args` parameter argument is not provided or the `fields` parameter provided contains an invalid field dict.
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+posted_order = buycoins.Orders.post_limit_order({"orderSide":"buy", "cryptocurrency":"bitcoin","coinAmount":0.002, "priceType":"dynamic"})
+
+print(posted_order)
+
+```
+
+#### post_market_order
+Post a market order and have the transaction details returned
+
+This function takes a single compulsory parameter which is a dict containing the required arguments needed for posting an order via the `postMarketOrder mutation` on the Buycoins API documentation. These arguments are: `cryptocurrency`, `orderSide`, and `coinAmount` as stated in the main API documentation. The `orderSide` can only be either of `buy` or `sell`. 
+
+The function raises an exception if a valid `args` parameter argument is not provided or the `fields` parameter provided contains an invalid field dict.
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+posted_order = buycoins.Orders.post_market_order({"orderSide":"buy", "cryptocurrency":"bitcoin", "coinAmount":0.002})
+
+print(posted_order)
+
+```
 
 
 ### Testing
