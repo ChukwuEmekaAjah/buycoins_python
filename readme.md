@@ -152,9 +152,30 @@ print(wallet_balances)
 
 ```
 
-### Orders
-
 ### Prices
+The `Prices` module is used for retrieving the current prices of cryptocurrencies supported on the Buycoins platform. It contains only one function. The function name is `list`. 
+
+The Buycoins documentation on retrieving the prices of cryptocurrencies can be found [here](https://developers.buycoins.africa/placing-orders/buy)
+
+#### list
+Retrieve a list of cryptocurrency prices
+
+This function takes no compulsory parameter. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `getPrices query` can return. The function raises an exception if the `fields` property provided contains an invalid field dict.
+
+It returns the current prices of cryptocurrencies supported on the Buycoins platform.
+
+```python
+import buycoins_python as buycoins
+
+buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+currency_prices = buycoins.Prices.list()
+
+print(currency_prices)
+
+```
+
+### Orders
 
 ### Transfers
 
