@@ -61,6 +61,48 @@ These modules are:
 - Prices - For retrieving cryptocurrency prices on the platform
 - Transfers - For checking transfer fees, sending, buying and selling cryptocurrencies via the API. 
 
+### Client Responses
+The Client offers two kinds of responses. They are: `failure` and `success` responses. A failure response occurs when the API returns back a response with errors. A success response occurs when the API returns the result expected by the call. Every type of response has a <b>status</b> key that can only be any of `success` or `failure`. Both responses are `dicts` and are represented as follows:
+
+##### Success Response
+```python
+
+    >>> import buycoins_python as buycoins
+
+    >>> buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+    >>> currency_prices = buycoins.Prices.list()
+
+    >>> print(currency_prices)
+
+    >>> {
+        "status":"success",
+        "data":
+            {"getPrices":[{
+                "id":"QnV5Y29pbnNQcmljZS1mM2ZhOWI2Yy00MmM4LTQxMzAtOThmZC0zZGMwYjRjMmRlNjQ=",
+                "cryptocurrency":"bitcoin",
+                "sellPricePerCoin":"17827839.315",
+                "minSell":"0.001",
+                "maxSell":"0.35190587",
+                "expiresAt":1612391202
+            }]
+            }
+        }
+
+    >>> #if the request were to fail by any means, the output of print would be:
+
+    >>> {
+        "status":"failure",
+        "errors":[{
+            "reason":"Field 'cryptocrrency' doesn't exist on type 'BuycoinsPrice'",
+            "field":"query.getPrices.cryptocrrency"}],
+        "raw":[{"message":"Field 'cryptocrrency' doesn't exist on type 'BuycoinsPrice'","locations":[{"line":1,"column":23}],"path":["query","getPrices","cryptocrrency"],"extensions":{"code":"undefinedField","typeName":"BuycoinsPrice","fieldName":"cryptocrrency"}}]
+```
+
+The `raw` field of a `failure` response is the raw error message from the API. However, an error response always has an `errors` key that's a list of errors. This list of errors contains a `dict` with keys `reason` (why the error happened) and `field` (where the error happened). 
+
+A success response always has a `data` key indicating the data returned from the API. 
+
 ## Modules API
 Every  `query` or `mutation` on the API takes a `fields` parameter that is optional. If the `fields` parameter is not provided, the API call defaults to returning all the data the `query` or `mutation` can provide. Since the API is a GraphQL API and developers are allowed to indicate the fields they want returned. 
 Since the API is a wrapper on the main client and not all developers understand or want to learn how to use GraphQL, the package contains a parser that transforms an array of fields to an equivalent GraphQL schema. The `fields` parameter which is a list only accepts `dicts` with only one required `dict` key: `field`. The two other keys are `args` and `fields`. `args` is equivalent to arguments being passed to a GraphQL node. It is a `dict` containing the argument name with its corresponding value. The `fields` key is a recursive pattern of the `fields` data structure. It is also a `list` just like the parent `fields` parameter. The nesting can be done to any depth of choice as in GraphQL.
@@ -405,6 +447,5 @@ Set `Logging`:
 ```
 
 ### Todo
-
 - Write tests for orders posting
 - Submit package to Pypi registry
