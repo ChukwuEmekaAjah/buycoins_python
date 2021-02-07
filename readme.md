@@ -64,6 +64,9 @@ These modules are:
 ### Client Responses
 The Client offers two kinds of responses. They are: `failure` and `success` responses. A failure response occurs when the API returns back a response with errors. A success response occurs when the API returns the result expected by the call. Every type of response has a <b>status</b> key that can only be any of `success` or `failure`. Both responses are `dicts` and are represented as follows:
 
+
+A success response always has a `data` key indicating the data returned from the API. 
+
 ##### Success Response
 ```python
 
@@ -89,6 +92,21 @@ The Client offers two kinds of responses. They are: `failure` and `success` resp
             }
         }
 
+```
+
+The `raw` field of a `failure` response is the raw error message from the API. However, an error response always has an `errors` key that's a list of errors. This list of errors contains a `dict` with keys `reason` (why the error happened) and `field` (where the error happened). 
+
+##### Failure Response
+```python
+
+    >>> import buycoins_python as buycoins
+
+    >>> buycoins.Auth.setup("public_key_...", "secret_key_...")
+
+    >>> currency_prices = buycoins.Prices.list()
+
+    >>> print(currency_prices)
+
     >>> #if the request were to fail by any means, the output of print would be:
 
     >>> {
@@ -98,10 +116,6 @@ The Client offers two kinds of responses. They are: `failure` and `success` resp
             "field":"query.getPrices.cryptocrrency"}],
         "raw":[{"message":"Field 'cryptocrrency' doesn't exist on type 'BuycoinsPrice'","locations":[{"line":1,"column":23}],"path":["query","getPrices","cryptocrrency"],"extensions":{"code":"undefinedField","typeName":"BuycoinsPrice","fieldName":"cryptocrrency"}}]
 ```
-
-The `raw` field of a `failure` response is the raw error message from the API. However, an error response always has an `errors` key that's a list of errors. This list of errors contains a `dict` with keys `reason` (why the error happened) and `field` (where the error happened). 
-
-A success response always has a `data` key indicating the data returned from the API. 
 
 ## Modules API
 Every  `query` or `mutation` on the API takes a `fields` parameter that is optional. If the `fields` parameter is not provided, the API call defaults to returning all the data the `query` or `mutation` can provide. Since the API is a GraphQL API and developers are allowed to indicate the fields they want returned. 
