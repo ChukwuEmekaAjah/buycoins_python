@@ -43,10 +43,10 @@ def create_request_body(fields):
         query += parse_args(fields["args"])
         query += ")"
 
-    query += "{{ {fields} }}".format(fields=parse_fields(fields["fields"]))
+    query += "{{ {fields} }}".format(fields=parse_fields(fields["fields"], []))
 
     query += "}"
-
+    
     return query
 
 def parse_args(args:dict):
@@ -71,7 +71,7 @@ def parse_args(args:dict):
 
     return ",".join(arg_pairs)
 
-def parse_fields(fields:list, fields_array=[]):
+def parse_fields(fields:list=[], fields_array=[]):
     """Parse fields that are expected to be returned in a graphql query and returns a string of fields and their arguments (if any)
 
     Args:
@@ -84,6 +84,7 @@ def parse_fields(fields:list, fields_array=[]):
         A string of comma-separated nodes e.g "cryptocurrency, price(time:1345353, type:min), fees(time:13535, type:min){day, name}"
 
     """
+
     for field in fields:
         parsed_fields = "{}".format(field.get("field"))
 

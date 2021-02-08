@@ -46,7 +46,7 @@ def list(fields:list = []):
 
 
     data = utilities.create_request_body(query_dict)
-
+    
     if(not utilities.AUTH):
         raise Exception("Please set up your public and secret keys using buycoins_python.Auth.setup function.")
 
