@@ -1,5 +1,5 @@
-from buycoins_python import Auth
-from buycoins_python import Transfers
+from buycoins_client import Auth
+from buycoins_client import Transfers
 import unittest
 from unittest.mock import patch
 
@@ -33,7 +33,7 @@ class TestBuySellMethods(unittest.TestCase):
             self.assertEqual(str(e), "amount argument must be a valid float and greater than 0.")
 
 
-    @patch('buycoins_python.Transfers.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Transfers.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_fees_request(self, mock_post):
         """
             Should return a failure status when fees retrieval fails
@@ -47,7 +47,7 @@ class TestBuySellMethods(unittest.TestCase):
         self.assertEqual(response['status'], "failure")
         self.assertEqual(response["errors"][0]["reason"], "Argument 'cryptocurrency' on Field 'getEstimatedNetworkFee' has an invalid value (ethereu). Expected type 'Cryptocurrency'.")
 
-    @patch('buycoins_python.Transfers.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Transfers.requests.post')  # Mock 'requests' module 'post' method.
     def test_successful_fees_request(self, mock_post):
         """
             Should return a success status when fees is successfully retrieved for a valid cryptocurrency
@@ -89,7 +89,7 @@ class TestBuySellMethods(unittest.TestCase):
         except Exception as e:
             self.assertEqual(str(e), "cryptocurrency argument must be a valid string identifier.")
 
-    @patch('buycoins_python.Transfers.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Transfers.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_sell_request(self, mock_post):
         """
             Should return a failure status when sale request fails
@@ -103,7 +103,7 @@ class TestBuySellMethods(unittest.TestCase):
         self.assertEqual(response['status'], "failure")
         self.assertEqual(response["errors"][0]["reason"], "Argument 'price' on Field 'sell' has an invalid value (meat). Expected type 'ID!'.")
 
-    @patch('buycoins_python.Transfers.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Transfers.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_buy_request(self, mock_post):
         """
             Should return a failure status when sale request fails

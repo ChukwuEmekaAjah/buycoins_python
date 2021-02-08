@@ -1,5 +1,5 @@
-from buycoins_python import Balances
-from buycoins_python import Auth
+from buycoins_client import Balances
+from buycoins_client import Auth
 import unittest
 from unittest.mock import patch
 
@@ -31,7 +31,7 @@ class TestBalancesMethods(unittest.TestCase):
         except Exception as e:
             self.assertEqual(str(e), "cryptocurrency argument must be a valid string identifier.")
     
-    @patch('buycoins_python.Balances.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Balances.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_Balances_retrieval(self, mock_post):
         """
             Should return a failure status when invalid node is requested.
@@ -45,7 +45,7 @@ class TestBalancesMethods(unittest.TestCase):
         self.assertEqual(response['status'], "failure")
         self.assertEqual(response["errors"][0]["reason"], "Field 'cryptocurrenc' doesn't exist on type 'Account'")
 
-    @patch('buycoins_python.Balances.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Balances.requests.post')  # Mock 'requests' module 'post' method.
     def test_successful_Balances_get(self, mock_post):
         """
             Should return a success status for successful single balance retrieval
@@ -59,7 +59,7 @@ class TestBalancesMethods(unittest.TestCase):
         self.assertEqual(response["data"]["getBalances"][0]["id"], "QWNjb3VudC0=")
         self.assertEqual(response["data"]["getBalances"][0]["cryptocurrency"], "usd_tether")
 
-    @patch('buycoins_python.Balances.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Balances.requests.post')  # Mock 'requests' module 'post' method.
     def test_successful_Balances_list(self, mock_post):
         """
             Should return a success status for successful Balances retrieval

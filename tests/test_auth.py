@@ -1,4 +1,4 @@
-from buycoins_python import Auth
+from buycoins_client import Auth
 import unittest
 
 class TestAuthMethods(unittest.TestCase):

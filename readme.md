@@ -19,7 +19,7 @@ You don't need this source code unless you want to modify the package. If you ju
 want to use the package, just run:
 
 ```sh
-pip install --upgrade buycoins_python
+pip install --upgrade buycoins_client
 ```
 
 Install from source with:
@@ -39,7 +39,7 @@ available in your [Buycoins App settings][api-keys] after you make a request to 
 value:
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
 # list personal orders
@@ -70,7 +70,7 @@ A success response always has a `data` key indicating the data returned from the
 ##### Success Response
 ```python
 
-    >>> import buycoins_python as buycoins
+    >>> import buycoins_client as buycoins
 
     >>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -99,7 +99,7 @@ The `raw` field of a `failure` response is the raw error message from the API. H
 ##### Failure Response
 ```python
 
-    >>> import buycoins_python as buycoins
+    >>> import buycoins_client as buycoins
 
     >>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -133,7 +133,7 @@ The fields parameter is shown below:
 
 ```
 
-The parser for the fields-graphql schema parser can be found in the `/buycoins_python/components/utilities.py` file and can be copied to create similar functionality in any package of choice. 
+The parser for the fields-graphql schema parser can be found in the `/buycoins_client/components/utilities.py` file and can be copied to create similar functionality in any package of choice. 
 
 ### Auth
 
@@ -141,7 +141,7 @@ It requires that you utilize the public and secret keys as specified in the [Aut
 
 To set up authentication credentials just call the `setup` function of the `Auth` module with the public and secret keys respectively. It raises an exception if any of both parameters is not provided or aren't of type `str`. You can set it up as follows:
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
 ```
@@ -156,7 +156,7 @@ This function takes a single compulsory parameter which is the account name to u
 It returns the newly created virtual bank account `dict` or an error response `dict` if the request to the Buycoins API fails.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -174,7 +174,7 @@ This function takes a single compulsory parameter which is the cryptocurrency na
 It returns the newly created cryptocurrency address `dict` or an error response `dict` if the request to the Buycoins API fails.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -196,7 +196,7 @@ This function takes a single compulsory parameter which is the cryptocurrency na
 It returns the wallet balance in the specified currency.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -214,7 +214,7 @@ This function takes no compulsory parameter. Just like in GraphQL where you spec
 It returns your wallet balances in all the cryptocurrencies that are supported on the Buycoins platform.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -237,7 +237,7 @@ This function takes no compulsory parameter. Just like in GraphQL where you spec
 It returns the current prices of cryptocurrencies supported on the Buycoins platform.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -265,7 +265,7 @@ Just like in GraphQL where you specify the fields you want returned, it accepts 
 It returns the fees in the specified cryptocurrency required to make a transfer possible on the Buycoins platform. 
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -285,7 +285,7 @@ Just like in GraphQL where you specify the fields you want returned, it accepts 
 It returns the transaction details. 
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -305,7 +305,7 @@ Just like in GraphQL where you specify the fields you want returned, it accepts 
 It returns the transaction details. 
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -325,7 +325,7 @@ Just like in GraphQL where you specify the fields you want returned, it accepts 
 It returns the transaction details. 
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -354,7 +354,7 @@ Just like in GraphQL where you specify the fields you want returned, it accepts 
 It returns all the limit orders made by you on the Buycoins platform.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -374,7 +374,7 @@ Just like in GraphQL where you specify the fields you want returned, it accepts 
 It returns all the limit orders made by you on the Buycoins platform.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -392,7 +392,7 @@ This function takes a single compulsory parameter which is a dict containing the
 The function raises an exception if a valid `args` parameter argument is not provided or the `fields` parameter provided contains an invalid field dict.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -410,7 +410,7 @@ This function takes a single compulsory parameter which is a dict containing the
 The function raises an exception if a valid `args` parameter argument is not provided or the `fields` parameter provided contains an invalid field dict.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 buycoins.Auth.setup("public_key_...", "secret_key_...")
 
@@ -439,7 +439,7 @@ Configure individual requests with keyword arguments.
 Also, make sure to have called the `Auth.setup` function at the beginning of your code file with your public and secret keys before making any calls to the API else the package would raise an exception.
 
 ```python
-import buycoins_python as buycoins
+import buycoins_client as buycoins
 
 # buy cryptocurrency
 response = buycoins.Orders.buy(args={"price":"QnV5Y29pbnNQcmljZS0zOGIwYTg1Yi1jNjA1LTRhZjAtOWQ1My01ODk1MGVkMjUyYmQ=", "coin_amount":0.02, "cryptocurrency":"bitcoin"})
@@ -455,7 +455,7 @@ production use, but `debug` is also available for more verbosity.
 There are a few options for enabling it:
 Set `Logging`:
 ```python
-    import buycoins_python as buycoins
+    import buycoins_client as buycoins
     buycoins.log = 'debug'
     
 ```

@@ -1,5 +1,5 @@
-from buycoins_python import Prices
-from buycoins_python import Auth
+from buycoins_client import Prices
+from buycoins_client import Auth
 import unittest
 from unittest.mock import patch
 
@@ -22,7 +22,7 @@ class TestPricesMethods(unittest.TestCase):
         except Exception as e:
             self.assertEqual(str(e), "Fields contains a node dict without a 'field' property.")
     
-    @patch('buycoins_python.Prices.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Prices.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_prices_retrieval(self, mock_post):
         """
             Should return a failure status when invalid node is requested.
@@ -36,7 +36,7 @@ class TestPricesMethods(unittest.TestCase):
         self.assertEqual(response['status'], "failure")
         self.assertEqual(response["errors"][0]["reason"], "Field 'cryptocrrency' doesn't exist on type 'BuycoinsPrice'")
 
-    @patch('buycoins_python.Prices.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Prices.requests.post')  # Mock 'requests' module 'post' method.
     def test_successful_prices_retrieval(self, mock_post):
         """
             Should return a success status for successful prices retrieval

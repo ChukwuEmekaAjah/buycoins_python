@@ -1,5 +1,5 @@
-from buycoins_python import Accounts
-from buycoins_python import Auth
+from buycoins_client import Accounts
+from buycoins_client import Auth
 import unittest
 from unittest.mock import patch
 
@@ -25,7 +25,7 @@ class TestAccountMethods(unittest.TestCase):
             self.assertEqual(str(e), "Please provide account name to create bank account for")
 
     
-    @patch('buycoins_python.Accounts.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Accounts.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_account_creation(self, mock_post):
         """
             Should return a failure status for failed account creation
@@ -38,7 +38,7 @@ class TestAccountMethods(unittest.TestCase):
         
         self.assertEqual(response['status'], "failure")
 
-    @patch('buycoins_python.Accounts.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Accounts.requests.post')  # Mock 'requests' module 'post' method.
     def test_successful_account_creation(self, mock_post):
         """
             Should return a success status for successful account creation
@@ -62,7 +62,7 @@ class TestAccountMethods(unittest.TestCase):
         except Exception as e:
             self.assertEqual(str(e), "crypto_currency parameter is compulsory and it is a string.")
 
-    @patch('buycoins_python.Accounts.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Accounts.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_address_creation(self, mock_post):
         """
             Should return a failure status for failed address creation
@@ -76,7 +76,7 @@ class TestAccountMethods(unittest.TestCase):
         self.assertEqual(response['status'], "failure")
         self.assertEqual(response["errors"][0]["reason"], "Argument 'cryptocurrency' on Field 'createAddress' has an invalid value (bitcin). Expected type 'Cryptocurrency'.")
 
-    @patch('buycoins_python.Accounts.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Accounts.requests.post')  # Mock 'requests' module 'post' method.
     def test_successful_address_creation(self, mock_post):
         """
             Should return a crypto address

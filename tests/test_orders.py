@@ -1,5 +1,5 @@
-from buycoins_python import Auth
-from buycoins_python import Orders
+from buycoins_client import Auth
+from buycoins_client import Orders
 import unittest
 from unittest.mock import patch
 
@@ -40,7 +40,7 @@ class TestOrdersMethods(unittest.TestCase):
         except Exception as e:
             self.assertEqual(str(e), "Fields contains a node dict without a 'field' property.")
     
-    @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Orders.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_list_my_orders(self, mock_post):
         """
             Should return a failure status when invalid node is requested.
@@ -54,7 +54,7 @@ class TestOrdersMethods(unittest.TestCase):
         self.assertEqual(response['status'], "failure")
         self.assertEqual(response["errors"][0]["reason"], "Field 'edgesa' doesn't exist on type 'PostOrderConnection'")
 
-    @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Orders.requests.post')  # Mock 'requests' module 'post' method.
     def test_successful_list_my_orders(self, mock_post):
         """
             Should return a success status for successful personal orders retrieval
@@ -67,7 +67,7 @@ class TestOrdersMethods(unittest.TestCase):
         self.assertEqual(response['status'], "success")
         self.assertEqual(response["data"]["getOrders"]["dynamicPriceExpiry"], 1612396362)
 
-    @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Orders.requests.post')  # Mock 'requests' module 'post' method.
     def test_failed_list_market_orders(self, mock_post):
         """
             Should return a failure status when invalid node is requested.
@@ -81,7 +81,7 @@ class TestOrdersMethods(unittest.TestCase):
         self.assertEqual(response['status'], "failure")
         self.assertEqual(response["errors"][0]["reason"], "Field 'edgesa' doesn't exist on type 'PostOrderConnection'")
 
-    @patch('buycoins_python.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    @patch('buycoins_client.Orders.requests.post')  # Mock 'requests' module 'post' method.
     def test_successful_list_market_orders(self, mock_post):
         """
             Should return a success status for successful personal orders retrieval
