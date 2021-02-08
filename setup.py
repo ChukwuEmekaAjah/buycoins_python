@@ -1,12 +1,14 @@
 from setuptools import setup
-from os import path
+import pathlib
 
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'readme.md'), encoding='utf-8') as f:
-    long_description = f.read()
+# The directory containing this file
+HERE = pathlib.Path(__file__).parent
+
+# The text of the README file
+README = (HERE / "README.md").read_text()
 
 setup(name='buycoins_client', 
-    version='1.1', 
+    version='1.2', 
     description='Buycoins API Python client', 
     url='https://github.com/ChukwuEmekaAjah/buycoins_python', 
     author='Chukwuemeka Ajah', 
@@ -15,6 +17,6 @@ setup(name='buycoins_client',
     packages=['buycoins_client'], 
     install_requires=['requests'], 
     zip_safe=True, 
-    long_description=long_description, 
+    long_description=README, 
     long_description_content_type='text/markdown'
 )
