@@ -445,21 +445,3 @@ import buycoins_client as buycoins
 response = buycoins.Orders.buy(args={"price":"QnV5Y29pbnNQcmljZS0zOGIwYTg1Yi1jNjA1LTRhZjAtOWQ1My01ODk1MGVkMjUyYmQ=", "coin_amount":0.02, "cryptocurrency":"bitcoin"})
 
 ```
-
-### Logging
-
-The library can be configured to emit logging that will give you better insight
-into what it's doing. The `info` logging level is usually most appropriate for
-production use, but `debug` is also available for more verbosity.
-
-There are a few options for enabling it:
-Set `Logging`:
-```python
-    import buycoins_client as buycoins
-    buycoins.log = 'debug'
-    
-```
-
-### Todo
-- Write tests for orders posting
-- Submit package to Pypi registry
