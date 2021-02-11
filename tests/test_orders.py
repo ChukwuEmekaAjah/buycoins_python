@@ -31,6 +31,94 @@ class TestOrdersMethods(unittest.TestCase):
         except Exception as e:
             self.assertEqual(str(e), "Personal orders status can only be 'open' or 'completed'.")
 
+    def test_absent_cryptocurrency_for_post_limit_order(self):
+        """
+            Should throw an exception for a args without a cryptocurrency key
+        """
+        args = {
+            "orderSide": "buy",
+            "priceType": "dynamic",
+            "coinAmount": 0.001
+        }
+        try:
+            Orders.post_limit_order(args)
+        except Exception as e:
+            self.assertEqual(str(e), "cryptocurrency argument must be a valid string identifier.")
+
+    def test_absent_orderSide_for_post_limit_order(self):
+        """
+            Should throw an exception for a args without a cryptocurrency key
+        """
+        args = {
+            "cryptocurrency": "bitcoin",
+            "priceType": "dynamic",
+            "coinAmount": 0.001
+        }
+        try:
+            Orders.post_limit_order(args)
+        except Exception as e:
+            self.assertEqual(str(e), "orderSide argument must be a valid string that is either 'buy' or 'sell'")
+
+    def test_absent_priceType_for_post_limit_order(self):
+        """
+            Should throw an exception for a args without a cryptocurrency key
+        """
+        args = {
+            "cryptocurrency": "bitcoin",
+            "coinAmount": 0.001,
+            "orderSide":"buy"
+        }
+        try:
+            Orders.post_limit_order(args)
+        except Exception as e:
+            self.assertEqual(str(e), "priceType argument must be a valid string that is either 'dynamic' or 'static'")
+
+    def test_absent_coinAmount_for_post_limit_order(self):
+        """
+            Should throw an exception for a args without a cryptocurrency key
+        """
+        args = {
+            "cryptocurrency": "bitcoin",
+            "priceType": "dynamic",
+            "orderSide":"buy"
+        }
+        try:
+            Orders.post_limit_order(args)
+        except Exception as e:
+            self.assertEqual(str(e), "coinAmount argument must be a valid float and greater than 0.")
+
+    def test_invalid_staticPrice_for_post_limit_order(self):
+        """
+            Should throw an exception for a args without a cryptocurrency key
+        """
+        args = {
+            "cryptocurrency": "bitcoin",
+            "priceType": "dynamic",
+            "orderSide":"buy",
+            "coinAmount": 0.01,
+            "staticPrice":"ajdf"
+        }
+        try:
+            Orders.post_limit_order(args)
+        except Exception as e:
+            self.assertEqual(str(e), "staticPrice argument must be a valid float and greater than 0.")
+
+    def test_invalid_dynamicPrice_for_post_limit_order(self):
+        """
+            Should throw an exception for a args without a cryptocurrency key
+        """
+        args = {
+            "cryptocurrency": "bitcoin",
+            "priceType": "dynamic",
+            "orderSide":"buy",
+            "coinAmount": 0.01,
+            "dynamicPrice":"ajdf"
+        }
+        try:
+            Orders.post_limit_order(args)
+        except Exception as e:
+            self.assertEqual(str(e), "dynamicPrice argument must be a valid float and greater than 0.")
+
     def test_invalid_field(self):
         """
             Should throw an exception for a node dict without a field property
