@@ -118,18 +118,83 @@ The `raw` field of a `failure` response is the raw error message from the API. H
 ```
 
 ## Modules API
-Every  `query` or `mutation` on the API takes a `fields` parameter that is optional. If the `fields` parameter is not provided, the API call defaults to returning all the data the `query` or `mutation` can provide. Since the API is a GraphQL API and developers are allowed to indicate the fields they want returned. 
-Since the API is a wrapper on the main client and not all developers understand or want to learn how to use GraphQL, the package contains a parser that transforms an array of fields to an equivalent GraphQL schema. The `fields` parameter which is a list only accepts `dicts` with only one required `dict` key: `field`. The two other keys are `args` and `fields`. `args` is equivalent to arguments being passed to a GraphQL node. It is a `dict` containing the argument name with its corresponding value. The `fields` key is a recursive pattern of the `fields` data structure. It is also a `list` just like the parent `fields` parameter. The nesting can be done to any depth of choice as in GraphQL.
+
+### Fields
+
+An explanation on how to choose the data fields returned by each mutation or query
+Every  `query` or `mutation` call on the package takes a `fields` parameter that is optional. If the `fields` parameter is not provided, the API call defaults to returning all the data the `query` or `mutation` can provide since the API is a GraphQL API and developers are allowed to indicate the fields they want returned. 
+
+Since the package is a wrapper on the main client and not all developers understand or want to learn how to use GraphQL, the package contains a parser that transforms an array of fields to an equivalent GraphQL schema. The `fields` parameter which is a list only accepts `dicts` with only one required `dict` key: `field`. The two other keys are `args` and `fields`. `args` is equivalent to arguments being passed to a GraphQL node. It is a `dict` containing the argument name with its corresponding value. The `fields` key is a recursive pattern of the `fields` data structure. It is also a `list` just like the parent `fields` parameter. The nesting can be done to any depth of choice as in GraphQL.
 
 The fields parameter is shown below:
 
 ```python
 
-    fields = [{'field':"cryptocurrency"}, {"field":"price"}}, {"field":"exchangeRate"}]
+    >>> fields = [
+        {'field':"cryptocurrency"}, 
+        {"field":"id"}}, 
+        {"field":"minSell"}
+    ]
 
-    fields_with_args = [{'field':"cryptocurrency"}, {"field":"price", "args":{"time":13435929, "type":"min"}}]
+    # An example request
+    >>> currency_prices = buycoins.Prices.list(fields=fields) # This would normally return all the data available in the getPrices Query
 
-    fields_with_other_fields = [{'field':"cryptocurrency"}, {"field":"price", "args":{"time":13435929, "type":"min"}}, {"field":"fees", "args":{"time":13435929, "type":"min"}, "fields":[{"field":"day"}, {"field":"name"}]}]
+    >>> print(currency_prices)
+
+    >>> {
+        "data":{
+            "getPrices":[{
+                "id": "aEDA324fafdjlfda",
+                "cryptocurrency":"bitcoin",
+                "minSell":0.002
+            }, {
+                "id": "qAF82fa2fal3ai",
+                "cryptocurrency":"litecoin",
+                "minSell":0.002
+            }
+            ]
+        }
+    }
+
+    >>> fields_with_args = [
+        {'field':"cryptocurrency"}, 
+        {"field":"price", "args":{"time":13435929, "type":"min"}}
+        ]
+
+    >>> fields_with_other_fields = [
+        {'field':"cryptocurrency"}, 
+        {"field":"price", "args":{"time":13435929, "type":"min"}}, 
+        {"field":"fees", "args":{"time":13435929, "type":"min"}, 
+        "fields":[
+            {"field":"day"}, 
+            {"field":"name"}]
+        }]
+
+    >>> # an example of field with sub-fields with getMarketBook query
+
+    >>> fields = [
+        {"field":"dynamicPriceExpiry"}, 
+        {"field":"orders", "fields":[
+            {"field":"edges", "fields": [
+                {"field":"node", "fields":[
+                    {"field":"id"}, 
+                    {"field":"cryptocurrency"}, 
+                    {"field":"coinAmount"}, 
+                    {"field":"side"}, 
+                    {"field":"status"}, 
+                    {"field":"createdAt"}, 
+                    {"field":"pricePerCoin"}, 
+                    {"field":"priceType"}, 
+                    {"field":"staticPrice"}, 
+                    {"field":"dynamicExchangeRate"}
+                    ]
+                }]
+            }]
+        }]
+
+    >>> market_orders = buycoins.Orders.list_market_orders(fields=fields)
+
+    >>> print(market_orders)
 
 ```
 

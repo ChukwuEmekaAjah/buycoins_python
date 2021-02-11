@@ -142,7 +142,7 @@ def post_limit_order(args:dict, fields:list=[]):
             {"field": "estimatedFee"}
 
             Default fields are:
-            [{"field": "estimatedFee"}, {"field": "total"}]
+            [{"field":"id"}, {"field":"cryptocurrency"}, {"field":"status"}, {"field":"coinAmount"}, {"field":"side"}, {"field":"createdAt"}, {"field":"pricePerCoin"}, {"field":"priceType"}, {"field":"staticPrice"}, {"field":"dynamicExchangeRate"}]
     
     Returns:
         A dict mapping containing a status key which can either be one of: "failure" or "success" and an errors/data key  depending on the status of the request. For example:
@@ -226,7 +226,7 @@ def post_market_order(args:dict, fields:list=[]):
             {"field": "estimatedFee"}
 
             Default fields are:
-            [{"field": "estimatedFee"}, {"field": "total"}]
+            [{"field":"id"}, {"field":"cryptocurrency"}, {"field":"status"}, {"field":"coinAmount"}, {"field":"side"}, {"field":"createdAt"}, {"field":"pricePerCoin"}, {"field":"priceType"}, {"field":"staticPrice"}, {"field":"dynamicExchangeRate"}]
     
     Returns:
         A dict mapping containing a status key which can either be one of: "failure" or "success" and an errors/data key  depending on the status of the request. For example:
