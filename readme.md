@@ -429,6 +429,11 @@ All tests for the modules are in the tests folder. In order to run the tests, ru
     python -m unittest discover tests  
 ```
 
+or
+
+```bash
+    pytest
+```
 ### Handling exceptions
 
 Invalid parameter types or absent parameters without a default raise an Exception. All excepts are of the generic Exception class. 

@@ -94,6 +94,43 @@ class TestOrdersMethods(unittest.TestCase):
         self.assertEqual(response['status'], "success")
         self.assertEqual(response["data"]["getMarketBook"]["dynamicPriceExpiry"], 1612396362)
 
+    @patch('buycoins_client.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    def test_successful_post_limit_order(self, mock_post):
+        """
+            Should return a success status for successful list order posting
+        """
+        mock_post.return_value = MockResponse({"data":{"postLimitOrder":{"id":"bDAd8slaAFDajd829slsf"}}}, 200)
+        
+        Auth.setup("chuks", "emeka")
+        args = {
+            "orderSide": "buy",
+            "priceType": "dynamic",
+            "cryptocurrency": "bitcoin",
+            "coinAmount": 0.001
+        }
+        response = Orders.post_limit_order(args, fields=[])
+        
+        self.assertEqual(response['status'], "success")
+        self.assertEqual(response["data"]["postLimitOrder"]["id"], "bDAd8slaAFDajd829slsf")
+
+    @patch('buycoins_client.Orders.requests.post')  # Mock 'requests' module 'post' method.
+    def test_successful_post_market_order(self, mock_post):
+        """
+            Should return a success status for successful market order posting
+        """
+        mock_post.return_value = MockResponse({"data":{"postMarketOrder":{"id":"adfFDAFDajd829slsf"}}}, 200)
+        
+        Auth.setup("chuks", "emeka")
+        args = {
+            "orderSide": "buy",
+            "cryptocurrency": "bitcoin",
+            "coinAmount": 0.001
+        }
+        response = Orders.post_market_order(args, fields=[])
+        
+        self.assertEqual(response['status'], "success")
+        self.assertEqual(response["data"]["postMarketOrder"]["id"], "adfFDAFDajd829slsf")
+
 
 if __name__ == '__main__':
     unittest.main()
