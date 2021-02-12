@@ -50,7 +50,7 @@ def create(account_name:str, fields:list=[]):
     if(not utilities.AUTH):
         raise Exception("Please set up your public and secret keys using buycoins_python.Auth.setup function.")
 
-    response = requests.post(utilities.API_URL, headers=utilities.HEADERS, auth=utilities.AUTH, data={"query":data}, params={})
+    response = requests.post(utilities.API_URL, headers=utilities.HEADERS, auth=HTTPBasicAuth(utilities.AUTH['username'], utilities.AUTH['password']), data={"query":data}, params={})
     
     return utilities.parse_response(response)
 
