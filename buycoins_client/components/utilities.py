@@ -24,7 +24,13 @@ def is_valid_fields(fields):
     for field in fields:
         if not field.get("field"):
             return False
-    
+        
+        if field.get('args'):
+            if type(field.get('args')) is not dict:
+                return False
+        
+        if field.get('fields'):
+            return is_valid_fields(field.get('fields'))
     return True
 
 def create_request_body(fields):
