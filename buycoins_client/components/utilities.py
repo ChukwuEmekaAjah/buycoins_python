@@ -22,6 +22,9 @@ def is_valid_fields(fields):
 
     """
     for field in fields:
+        if type(field) is not dict:
+            return False
+            
         if not field.get("field"):
             return False
         
