@@ -206,8 +206,9 @@ It requires that you utilize the public and secret keys as specified in the [Aut
 
 To set up authentication credentials just call the `setup` function of the `Auth` module with the public and secret keys respectively. It raises an exception if any of both parameters is not provided or aren't of type `str`. You can set it up as follows:
 ```python
-import buycoins_client as buycoins
-buycoins.Auth.setup("public_key_...", "secret_key_...")
+>>> import buycoins_client as buycoins
+
+>>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
 ```
 
@@ -215,19 +216,19 @@ buycoins.Auth.setup("public_key_...", "secret_key_...")
 The `Accounts` module is used for creating virtual bank accounts and for creating cryptocurrency addresses. It contains two functions, these functions are: `create` for creating a virtual account and `create_address` for creating a cryptocurrency address. For creating a virtual account, see the documentation from the  API here [Create a virtual account](https://developers.buycoins.africa/naira-token-account/create-virtual-deposit-account).
 For creating a cryptocurrency address, see the main documentation here: [Create cryptocurrency address](https://developers.buycoins.africa/receiving/create-address)
 
-#### create
+#### create (<b> This feature is currently disabled </b>)
 This function takes a single compulsory parameter which is the account name to use for the new virtual bank account. Just like in GraphQL where you specify the fields you want returned, it accepts an optional fields parameter that's a list. If a fields list is not provided, it defaults to returning all the data the `mutation` can return. The function raises an exception if a valid `account_name` parameter is not provided or the `fields` parameter provided contains an invalid field dict.
 
 It returns the newly created virtual bank account `dict` or an error response `dict` if the request to the Buycoins API fails.
 
 ```python
-import buycoins_client as buycoins
+>>> import buycoins_client as buycoins
 
-buycoins.Auth.setup("public_key_...", "secret_key_...")
+>>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
-new_account = buycoins.Accounts.create("Chukwuemeka Ajah")
+>>> new_account = buycoins.Accounts.create("Chukwuemeka Ajah")
 
-print(new_account)
+>>> print(new_account)
 
 ```
 
@@ -239,13 +240,23 @@ This function takes a single compulsory parameter which is the cryptocurrency na
 It returns the newly created cryptocurrency address `dict` or an error response `dict` if the request to the Buycoins API fails.
 
 ```python
-import buycoins_client as buycoins
+>>> import buycoins_client as buycoins
 
-buycoins.Auth.setup("public_key_...", "secret_key_...")
+>>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
-new_address = buycoins.Accounts.create_address("litecoin")
+>>> new_address = buycoins.Accounts.create_address("litecoin")
 
-print(new_address)
+>>> print(new_address)
+
+>>> {
+        'status': 'success', 
+        'data': {
+            'createAddress': {
+                'cryptocurrency': 'litecoin', 
+                'address': 'MTyrRGZKfo1jNJvfH3RWnQ5qjivLT2UyYn'
+            }
+        }
+    }
 
 ```
 
@@ -261,13 +272,24 @@ This function takes a single compulsory parameter which is the cryptocurrency na
 It returns the wallet balance in the specified currency.
 
 ```python
-import buycoins_client as buycoins
+>>> import buycoins_client as buycoins
 
-buycoins.Auth.setup("public_key_...", "secret_key_...")
+>>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
-wallet_balance = buycoins.Balances.get("litecoin")
+>>> wallet_balance = buycoins.Balances.get("litecoin", fields=[{"field":"confirmedBalance"}])
 
-print(wallet_balance)
+>>> print(wallet_balance)
+
+>>> {
+        'status': 'success', 
+        'data': {
+            'getBalances': [
+               {
+                    'confirmedBalance': '0.0'
+                }
+            ]
+        }
+    }
 
 ```
 
@@ -279,13 +301,39 @@ This function takes no compulsory parameter. Just like in GraphQL where you spec
 It returns your wallet balances in all the cryptocurrencies that are supported on the Buycoins platform.
 
 ```python
-import buycoins_client as buycoins
+>>> import buycoins_client as buycoins
 
-buycoins.Auth.setup("public_key_...", "secret_key_...")
+>>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
-wallet_balances = buycoins.Balances.list()
+>>> wallet_balances = buycoins.Balances.list()
 
-print(wallet_balances)
+>>> print(wallet_balances)
+
+>>> {
+        'status': 'success', 
+        'data': {
+            'getBalances': [
+                {
+                    'id': 'QWNjb3VudC0=', 'cryptocurrency': 'usd_tether', 'confirmedBalance': '0.0'
+                }, 
+                {
+                    'id': 'QWNjb3VudC0=', 'cryptocurrency': 'naira_token', 'confirmedBalance': '0.0'
+                }, 
+                {
+                    'id': 'QWNjb3VudC0=', 'cryptocurrency': 'bitcoin', 'confirmedBalance': '0.0'
+                }, 
+                {
+                    'id': 'QWNjb3VudC0=', 'cryptocurrency': 'ethereum', 'confirmedBalance': '0.0'
+                }, 
+                {
+                    'id': 'QWNjb3VudC0=', 'cryptocurrency': 'litecoin', 'confirmedBalance': '0.0'
+                }, 
+                {
+                    'id': 'QWNjb3VudC0=', 'cryptocurrency': 'usd_coin', 'confirmedBalance': '0.0'
+                }
+            ]
+        }
+    }
 
 ```
 
@@ -302,13 +350,44 @@ This function takes no compulsory parameter. Just like in GraphQL where you spec
 It returns the current prices of cryptocurrencies supported on the Buycoins platform.
 
 ```python
-import buycoins_client as buycoins
+>>> import buycoins_client as buycoins
 
-buycoins.Auth.setup("public_key_...", "secret_key_...")
+>>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
-currency_prices = buycoins.Prices.list()
+>>> currency_prices = buycoins.Prices.list()
 
-print(currency_prices)
+>>> print(currency_prices)
+
+>>> {
+    'status': 'success', 
+    'data': {
+        'getPrices': [{
+            'id': 'QnV5Y29pbnNQcmljZS0zZjVmZmUwMS1hM2M1LTRlNTgtODY0Yi1jYmM0NWNkZmY3ZWM=', 
+            'cryptocurrency': 'bitcoin', 
+            'sellPricePerCoin': '23865583.5', 
+            'minSell': '0.0002', 
+            'maxSell': '4.54256862', 
+            'expiresAt': 1614295216
+            }, 
+            {
+            'id': 'QnV5Y29pbnNQcmljZS0wN2RkMDNmYi01YWM1LTRkMTgtOWExMy1kZTZjYWFkMDFmMmQ=', 
+            'cryptocurrency': 'ethereum', 
+            'sellPricePerCoin': '753528.6', 
+            'minSell': '0.005', 
+            'maxSell': '20.32703634', 
+            'expiresAt': 1614295217
+            }, 
+            {
+                'id': 'QnV5Y29pbnNQcmljZS1lZDdmNzgxNi1kMTUyLTQ2ZjUtYTc1ZS04OTc5NjEzY2VhN2M=', 
+                'cryptocurrency': 'litecoin', 'sellPricePerCoin': '91995.75', 'minSell': '0.05', 
+                'maxSell': '503.39025025', 'expiresAt': 1614295220
+            }, 
+            {'id': 'QnV5Y29pbnNQcmljZS1iZGY0OGU4NC1mYTliLTQyNTAtYjc4Ny1kYzRmZjFiNzkyMDY=', 
+            'cryptocurrency': 'usd_coin', 'sellPricePerCoin': '495.099', 'minSell': '5', 
+            'maxSell': '45090.08437014', 'expiresAt': 1614295218
+            }]
+        }
+    }
 
 ```
 
@@ -330,13 +409,22 @@ Just like in GraphQL where you specify the fields you want returned, it accepts 
 It returns the fees in the specified cryptocurrency required to make a transfer possible on the Buycoins platform. 
 
 ```python
-import buycoins_client as buycoins
+>>> import buycoins_client as buycoins
 
-buycoins.Auth.setup("public_key_...", "secret_key_...")
+>>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
-fees = buycoins.Transfers.fees({"cryptocurrency":"bitcoin", "amount":0.02})
+>>> fees = buycoins.Transfers.fees({"cryptocurrency":"bitcoin", "amount":0.02}, fields=[{"field":"estimatedFee"}])
 
-print(fees)
+>>> print(fees)
+
+>>> {
+        'status': 'success', 
+        'data': {
+            'getEstimatedNetworkFee': {
+                'estimatedFee': '0.00062'
+            }
+        }
+    }
 
 ```
 
@@ -419,14 +507,25 @@ Just like in GraphQL where you specify the fields you want returned, it accepts 
 It returns all the limit orders made by you on the Buycoins platform.
 
 ```python
-import buycoins_client as buycoins
+>>> import buycoins_client as buycoins
 
-buycoins.Auth.setup("public_key_...", "secret_key_...")
+>>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
-orders = buycoins.Orders.list_my_orders(status="completed")
+>>> orders = buycoins.Orders.list_my_orders(status="completed")
 
-print(orders)
+>>> print(orders)
 
+>>> {
+        'status': 'success', 
+        'data': {
+            'getOrders': {
+                'dynamicPriceExpiry': 1614296116, 
+                'orders': {
+                    'edges': []
+                }
+            }
+        }
+    }
 ```
 
 #### list_market_orders
@@ -439,13 +538,54 @@ Just like in GraphQL where you specify the fields you want returned, it accepts 
 It returns all the limit orders made by you on the Buycoins platform.
 
 ```python
-import buycoins_client as buycoins
+>>> import buycoins_client as buycoins
 
-buycoins.Auth.setup("public_key_...", "secret_key_...")
+>>> buycoins.Auth.setup("public_key_...", "secret_key_...")
 
-orders = buycoins.Orders.list_market_orders()
+>>> orders = buycoins.Orders.list_market_orders()
 
-print(orders)
+>>> print(orders)
+
+>>> {
+        'status': 'success', 
+        'data': {
+            'getMarketBook': {
+                'dynamicPriceExpiry': 1614296236, 
+                'orders': {
+                    'edges': [
+                        {
+                            'node': {
+                                'id': 'UG9zdE9yZGVyLTg5NDUxNTM2LWU1MzAtNDY2OS1hNDZjLWFhYWE5MjdlY2JlYw==', 
+                                'cryptocurrency': 'bitcoin', 
+                                'coinAmount': '0.0005', 
+                                'side': 'sell', 
+                                'status': 'active', 
+                                'createdAt': 1614291760, 
+                                'pricePerCoin': '26599999.0', 
+                                'priceType': 'static', 
+                                'staticPrice': '2659999900', 
+                                'dynamicExchangeRate': None
+                            }
+                        },
+                        {
+                            'node': {
+                                'id': 'UG9zdE9yZGVyLWJhNTMxYTUyLWU3ZGUtNDU4Yi05MmNhLWYxMTMxYzFlOGQ3NA==', 
+                                'cryptocurrency': 'bitcoin', 
+                                'coinAmount': '0.006', 
+                                'side': 'sell', 
+                                'status': 'active', 
+                                'createdAt': 1614273600, 
+                                'pricePerCoin': '25500000.0', 
+                                'priceType': 'static', 
+                                'staticPrice': '2550000000', 
+                                'dynamicExchangeRate': None
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
 
 ```
 

@@ -8,7 +8,7 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 
 setup(name='buycoins_client', 
-    version='1.4.2', 
+    version='1.4.3', 
     description='Buycoins API Python client', 
     url='https://github.com/ChukwuEmekaAjah/buycoins_python', 
     author='Chukwuemeka Ajah', 
